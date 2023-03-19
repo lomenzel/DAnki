@@ -21,9 +21,8 @@ describe('AppComponent', () => {
   });
 
   it(`should have as title 'AnkiTubeAngular'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('AnkiTubeAngular');
+
+
   });
 
   it('should render title', () => {

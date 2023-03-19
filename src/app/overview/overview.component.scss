@@ -1,0 +1,12 @@
+div.wrapper{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8cm, 1fr));
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+  justify-items: stretch;
+  align-items: stretch;
+  margin: 10px;
+
+
+
+}

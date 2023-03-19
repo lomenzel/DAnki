@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>{{deck.name}}</h2>
+<mat-dialog-content>
+  <div class="decks-grid">
+    <div class="deck-item" *ngFor="let subdeck of decks">
+      <mat-icon class="deck-icon">folder</mat-icon>
+      <div class="deck-name">{{subdeck.name}}</div>
+    </div>
+    <div class="deck-item">
+      <mat-icon class="deck-icon">add_circle_outline</mat-icon>
+      <div class="deck-name">Neues Deck</div>
+    </div>
+  </div>
+
+  <div class="materials-section">
+    <h3>Materials</h3>
+
+    <div class="materials-grid">
+      <div class="material-item" *ngFor="let material of materials">
+        <a href="{{material.url}}" target="_blank">{{material.name}}</a>
+      </div>
+      <div class="material-item">
+        <mat-icon class="material-icon">add_circle_outline</mat-icon>
+        <div class="material-name">Neues Material</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards-section">
+    <h3>Cards</h3>
+
+    <div class="cards-list">
+      <div class="card-item" *ngFor="let card of cards">
+        <div class="card-front">{{card.front}}</div>
+        <div class="card-back">{{card.back}}</div>
+      </div>
+      <div class="card-item">
+        <mat-icon class="card-icon">add_circle_outline</mat-icon>
+        <div class="card-name">Neue Karte</div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onClose()">SCHLIEßEN</button>
+</mat-dialog-actions>
