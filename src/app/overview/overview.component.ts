@@ -1,6 +1,6 @@
 import {Component, ChangeDetectorRef} from '@angular/core';
 import GUN from "gun"
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeckComponent} from "../deck/deck.component";
 
 @Component({
@@ -13,7 +13,7 @@ export class OverviewComponent {
   gDecks = this.gun.get("decks")
 
 
-  constructor(private changeDirectorRef: ChangeDetectorRef,public dialog:MatDialog) {
+  constructor(private changeDirectorRef: ChangeDetectorRef, public dialog: MatDialog) {
     console.log(this.gDecks)
 
     this.gDecks.map().on((data, key) => {
@@ -30,8 +30,15 @@ export class OverviewComponent {
     //this.gDecks.set({name: "GUN"})
   }
 
-  openDialog(deckUuid:string){
-    const dialogRef = this.dialog.open(DeckComponent, {data:deckUuid})
+  openDialog(deckUuid: string) {
+
+    const dialogConfig = new MatDialogConfig()
+
+    dialogConfig.maxWidth = "30cm"
+    dialogConfig.width = "80vw"
+    dialogConfig.data = deckUuid
+
+    const dialogRef = this.dialog.open(DeckComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`)
     })
@@ -45,7 +52,7 @@ export class OverviewComponent {
   }
 
   add() {
-    if(this.newName !== "") {
+    if (this.newName !== "") {
       this.gDecks.set({name: this.newName})
       this.newName = ""
     }

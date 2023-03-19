@@ -1,4 +1,4 @@
-div.wrapper{
+div.wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(8cm, 1fr));
   grid-column-gap: 1em;
@@ -6,7 +6,12 @@ div.wrapper{
   justify-items: stretch;
   align-items: stretch;
   margin: 10px;
+}
 
+div.outer {
+  max-width: 60cm;
+  margin: auto;
+  padding: 20px
 
 
 }

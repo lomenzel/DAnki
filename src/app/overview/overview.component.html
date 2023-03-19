@@ -1,47 +1,49 @@
-<div class="wrapper">
-  <mat-card><mat-card-header>
-    <mat-card-title>Neues Deck</mat-card-title>
+<div class="outer">
+<mat-card-header>
+  <mat-card-title>Decks</mat-card-title>
 
-  </mat-card-header>
-    <mat-card-content>
+</mat-card-header>
+  <mat-card-content>
 
-        <mat-form-field class="example-full-width">
-          <mat-label>Name</mat-label>
-          <input [(ngModel)]="newName" matInput placeholder="" value="">
-        </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input [(ngModel)]="newName" matInput placeholder="" value="">
+    </mat-form-field>
 
-      <button (click)="add()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>add</mat-icon>
-      </button>
-    </mat-card-content>
+    <button (click)="add()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-content>
 
-  </mat-card>
-
-
-  <mat-card class="example-card" *ngFor="let deck of decks;">
-    <mat-card-header>
-      <mat-card-subtitle>{{deck.uuid}}</mat-card-subtitle>
-     <mat-card-title>{{deck.name}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-     <!-- <p>{{deck.description}}</p> -->
-      <mat-divider></mat-divider>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>download</mat-icon>
-      </button>
-      <button (click)="openDialog(deck.uuid)" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button (click)="remove(deck.uuid)" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>delete</mat-icon>
-      </button>
-
-    </mat-card-actions>
-
-  </mat-card>
+  <div class="wrapper">
 
 
+    <mat-card class="example-card" *ngFor="let deck of decks;">
+      <mat-card-header>
+        <mat-card-subtitle>{{deck.uuid}}</mat-card-subtitle>
+        <mat-card-title>{{deck.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- <p>{{deck.description}}</p> -->
+        <mat-divider></mat-divider>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+          <mat-icon>download</mat-icon>
+        </button>
+        <button (click)="openDialog(deck.uuid)" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with share icon">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="remove(deck.uuid)" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with share icon">
+          <mat-icon>delete</mat-icon>
+        </button>
 
+      </mat-card-actions>
+
+    </mat-card>
+
+
+  </div>
 </div>
