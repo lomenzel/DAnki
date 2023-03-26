@@ -17,12 +17,15 @@
       <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
         <mat-icon>download</mat-icon>
       </button>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>settings</mat-icon>
+      <button (click)="openNoteTypesDialog()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>library_books</mat-icon>
       </button>
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>person</mat-icon>
+        <mat-icon>restore_from_trash</mat-icon>
       </button>
+      <a href="" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>bug_report</mat-icon>
+      </a>
     </mat-toolbar>
 
     <router-outlet></router-outlet>

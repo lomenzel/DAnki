@@ -18,6 +18,9 @@ import {FormsModule} from "@angular/forms";
 import {MatInputModule} from '@angular/material/input';
 import { DeckComponent } from './deck/deck.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatExpansionModule} from '@angular/material/expansion';
+import { NotetypesComponent } from './notetypes/notetypes.component';
 
 
 @NgModule({
@@ -25,7 +28,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     AppComponent,
     OverviewComponent,
     MenuComponent,
-    DeckComponent
+    DeckComponent,
+    NotetypesComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -41,7 +46,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatCardModule,
     FormsModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

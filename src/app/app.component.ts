@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import gun from "gun"
+import {MatDialog} from "@angular/material/dialog";
+import {NotetypesComponent} from "./notetypes/notetypes.component";
+
 
 @Component({
   selector: 'app-root',
@@ -8,4 +10,9 @@ import gun from "gun"
 })
 export class AppComponent {
 
+  constructor(private dialog: MatDialog) {
+  }
+  openNoteTypesDialog(){
+    const d = this.dialog.open(NotetypesComponent)
+  }
 }

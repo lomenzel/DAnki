@@ -1,4 +1,4 @@
-div.wrapper{
+div.wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(8cm, 1fr));
   grid-column-gap: 1em;
@@ -9,12 +9,66 @@ div.wrapper{
   background-color: #303030;
   border-radius: 4px;
 }
-mat-dialog-content{
-  background-color: #303030;
+
+mat-dialog-content {
+
 }
-mat-form-field{
+
+mat-form-field {
   margin-right: 4px;
 }
-mat-form-field:has(textarea){
+
+mat-expansion-panel{
+  background:#303030;
+  mat-expansion-panel-header{
+
+  }
+}
+
+span {
+
+  margin: 0;
+  padding: 0;
+
+  mat-chip {
+    margin-bottom: 3px;
+    padding: 3px 12px;
+
+  }
+  button:first-child{
+    clip-path: polygon(calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%, 0% 50%, 0% 0%);
+margin-left: 8px;
+  }
+
+  button {
+    border:none;
+    background-color: #303030;
+    margin: 2px;
+    margin-bottom: 8px;
+    clip-path: polygon(calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%, 8px 50%, 0% 0%);
+
+    input {
+      border: none;
+      color: white;
+      background-color: transparent;
+      font-size:1rem;
+
+
+
+    }
+    input:focus-visible{
+      border:2px solid transparent;
+      outline: none;
+    }
+  }
+
+}
+
+.title {
+  margin-top: 0px
+}
+
+.mat-form-field-wrapper {
+  margin-bottom: -1, 25em
 
 }

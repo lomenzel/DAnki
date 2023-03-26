@@ -1,0 +1,9 @@
+<div mat-dialog-title>
+  Notiztypen
+</div>
+<mat-dialog-content>
+  <button mat-button>Importieren</button><br>
+  <mat-list>
+    <mat-list-item *ngFor="let t of types">{{t.name}} <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button></mat-list-item>
+  </mat-list>
+</mat-dialog-content>

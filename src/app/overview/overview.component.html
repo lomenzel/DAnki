@@ -11,7 +11,7 @@
     </mat-form-field>
 
     <button (click)="add()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>add</mat-icon>
+      <mat-icon >add</mat-icon>
     </button>
   </mat-card-content>
 
@@ -29,15 +29,15 @@
       </mat-card-content>
       <mat-card-actions>
         <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-          <mat-icon>download</mat-icon>
+          <mat-icon color="accent">download</mat-icon>
         </button>
-        <button (click)="openDialog(deck.uuid)" mat-icon-button class="example-icon"
+        <button (click)="openDialog([{name:deck.name,uuid:deck.uuid}])" mat-icon-button class="example-icon"
                 aria-label="Example icon-button with share icon">
-          <mat-icon>edit</mat-icon>
+          <mat-icon color="accent">edit</mat-icon>
         </button>
         <button (click)="remove(deck.uuid)" mat-icon-button class="example-icon"
                 aria-label="Example icon-button with share icon">
-          <mat-icon>delete</mat-icon>
+          <mat-icon color="warn">delete</mat-icon>
         </button>
 
       </mat-card-actions>

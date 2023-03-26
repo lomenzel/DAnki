@@ -9,7 +9,7 @@ import {DeckComponent} from "../deck/deck.component";
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
-  gun = GUN(['http://139-162-135-50.ip.linodeusercontent.com:8765/gun'])
+  gun = GUN(['https://139-162-135-50.ip.linodeusercontent.com:8765/gun','https://gun-manhattan.herokuapp.com/gun'])
   gDecks = this.gun.get("decks")
 
 
@@ -30,17 +30,20 @@ export class OverviewComponent {
     //this.gDecks.set({name: "GUN"})
   }
 
-  openDialog(deckUuid: string) {
+  openDialog(path: {name:string,uuid:string}[]) {
 
     const dialogConfig = new MatDialogConfig()
 
     dialogConfig.maxWidth = "30cm"
     dialogConfig.width = "80vw"
-    dialogConfig.data = deckUuid
+    dialogConfig.data = path
 
     const dialogRef = this.dialog.open(DeckComponent, dialogConfig)
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`)
+     console.log(`Dialog result: `, result)
+      if(result !== undefined){
+        this.openDialog(result)
+      }
     })
   }
 
