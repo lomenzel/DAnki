@@ -121,7 +121,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Kartentyp</mat-label>
             <mat-select [(value)]="newCardType">
-              <mat-option *ngFor="let type of ['basic','cloze']" [value]="type">
+              <mat-option *ngFor="let type of types" [value]="type">
                 {{type}}
               </mat-option>
             </mat-select>

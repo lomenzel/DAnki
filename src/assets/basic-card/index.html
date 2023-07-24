@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Einfache Karte</title>
+</head>
+<body>
+
+
+<script>
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString)
+  const fields = JSON.parse(urlParams.get("fields"))
+  const back = JSON.parse(urlParams.get("back"))
+
+  let front = document.createElement("h1")
+  front.innerHTML = fields[0]
+
+  document.body.append(front)
+
+  if(back){
+    let hr = document.createElement("hr")
+    document.body.append(hr)
+
+    let b = document.createElement("p")
+    b.innerHTML = fields[1]
+    document.body.append(b)
+  }
+
+
+</script>
+</body>
+</html>

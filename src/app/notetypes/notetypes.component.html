@@ -2,8 +2,13 @@
   Notiztypen
 </div>
 <mat-dialog-content>
-  <button mat-button>Importieren</button><br>
+  <mat-form-field class="example-full-width">
+    <mat-label>CID</mat-label>
+    <input [(ngModel)]="neu" matInput>
+  </mat-form-field>
+  <button mat-button (click)="add()">Add</button><br>
+  <p>{{types}}</p>
   <mat-list>
-    <mat-list-item *ngFor="let t of types">{{t.name}} <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button></mat-list-item>
+    <mat-list-item *ngFor="let t of types">{{t}} <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button></mat-list-item>
   </mat-list>
 </mat-dialog-content>

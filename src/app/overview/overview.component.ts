@@ -2,6 +2,7 @@ import {Component, ChangeDetectorRef} from '@angular/core';
 import GUN from "gun"
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DeckComponent} from "../deck/deck.component";
+import {GunService} from "../gun.service";
 
 @Component({
   selector: 'app-overview',
@@ -9,11 +10,11 @@ import {DeckComponent} from "../deck/deck.component";
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
-  gun = GUN(['https://139-162-135-50.ip.linodeusercontent.com:8765/gun','https://gun-manhattan.herokuapp.com/gun'])
+  gun = this.gunService.get()
   gDecks = this.gun.get("decks")
 
 
-  constructor(private changeDirectorRef: ChangeDetectorRef, public dialog: MatDialog) {
+  constructor(private changeDirectorRef: ChangeDetectorRef, public dialog: MatDialog, public gunService:GunService) {
     console.log(this.gDecks)
 
     this.gDecks.map().on((data, key) => {

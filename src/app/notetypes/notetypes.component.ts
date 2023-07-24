@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {TypesService} from "../types.service";
 
 @Component({
   selector: 'app-notetypes',
@@ -7,7 +8,16 @@ import { Component } from '@angular/core';
 })
 export class NotetypesComponent {
 
-  types = [{
-    name: "Basic"
-  },{name:"Cloze"}]
+  constructor(public typesService:TypesService) {
+
+  }
+  neu:string= "";
+  types = this.typesService.get()
+
+  add(){
+    if(this.neu){
+      this.typesService.add(this.neu)
+      this.neu= ""
+    }
+  }
 }

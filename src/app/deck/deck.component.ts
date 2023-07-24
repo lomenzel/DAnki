@@ -1,6 +1,8 @@
 import {Component, Inject, ChangeDetectorRef} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import GUN, {IGunChain, IGunInstance} from "gun";
+import {GunService} from "../gun.service";
+import {TypesService} from "../types.service";
 
 
 @Component({
@@ -14,6 +16,8 @@ export class DeckComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { name: string, uuid: string }[],
     public dialogRef: MatDialogRef<DeckComponent>,
+    public gunService: GunService,
+    public typesService:TypesService,
     private changeDirectorRef: ChangeDetectorRef) {
     this.path = [...this.data]
     let uuid: string = this.data[this.data.length - 1].uuid
@@ -73,7 +77,7 @@ export class DeckComponent {
     },10)
   }
 
-  gun = GUN(['https://139-162-135-50.ip.linodeusercontent.com:8765/gun','https://gun-manhattan.herokuapp.com/gun'])
+  gun = this.gunService.get()
   gDeck: IGunChain<any, IGunChain<any, IGunInstance<any>, IGunInstance<any>, "decks">, IGunInstance<any>, string> = this.gun.get(`decks/${this.data}`)
 
   path: { name: string, uuid: string }[] = [{name: "Lädt...", uuid: ""}]
@@ -104,6 +108,8 @@ export class DeckComponent {
     this.gCards.get(key).put(null)
     this.cards = this.cards.filter(e => e.uuid !== key)
   }
+
+  types = this.typesService.get()
 
 
   newDeckName: string = ""
