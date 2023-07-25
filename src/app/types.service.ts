@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {GunService} from "./gun.service";
+import {SettingsService} from "./settings.service";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,8 @@ import {GunService} from "./gun.service";
 export class TypesService {
 
   constructor(
-    public gunService: GunService
+    public gunService: GunService,
+    public settingsService:SettingsService
   ) {
     this.gun.map().on((data, key) => this.event(data, key))
   }
@@ -21,7 +23,7 @@ export class TypesService {
     //console.log("gun", this.gun)
     this.types = this.types.filter(e => e.key != key)
     if (data)
-      fetch("http://localhost:8080/ipfs/" + data.cid + "/manifest.json")
+      fetch(this.settingsService.getIpfsGateway() + data.cid + "/manifest.json")
         .then(a => {
           //console.log("try json parse", data.cid, a);
           return a.json()

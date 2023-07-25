@@ -21,6 +21,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatExpansionModule} from '@angular/material/expansion';
 import { NotetypesComponent } from './notetypes/notetypes.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NotetypesComponent } from './notetypes/notetypes.component';
     MenuComponent,
     DeckComponent,
     NotetypesComponent,
+    SettingsComponent,
 
   ],
   imports: [

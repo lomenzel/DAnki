@@ -1,0 +1,18 @@
+<p>Änderungen werden erst beim nächsten Neustart aktiv</p>
+<button mat-raised-button (click)="reload()">Neu laden</button>
+
+<h1>GUN</h1>
+<mat-form-field class="example-full-width">
+  <mat-label>Name</mat-label>
+  <input [(ngModel)]="newGun" matInput placeholder="" value="">
+</mat-form-field>
+
+<button (click)="addGun()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+  <mat-icon >add</mat-icon>
+</button>
+<p *ngFor="let g of gunServers">{{g}} <button mat-icon-button><mat-icon>delete</mat-icon></button></p>
+
+<h1>IPFS</h1>
+<p>{{ipfsGateway}}</p>
+<input [(ngModel)]="newIpfs">
+<button mat-raised-button (click)="setIpfs()">Ändern</button>

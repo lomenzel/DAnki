@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import GUN from "gun";
+import {SettingsService} from "./settings.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GunService {
 
-  constructor() { }
+  constructor(public settingsService:SettingsService) { }
 
-  gun = GUN(['https://gun-manhattan.herokuapp.com/gun', 'https://menzel.lol:8765/gun'])
+  gun = GUN(this.settingsService.getGunServer())
 
   get(){
     return this.gun
