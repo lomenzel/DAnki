@@ -6,7 +6,7 @@ div.wrapper {
   justify-items: stretch;
   align-items: stretch;
   padding: 10px;
-  background-color: #303030;
+  //background-color: #303030;
   border-radius: 4px;
 }
 
@@ -19,7 +19,7 @@ mat-form-field {
 }
 
 mat-expansion-panel{
-  background:#303030;
+  //background:#303030;
   mat-expansion-panel-header{
 
   }
@@ -42,14 +42,14 @@ margin-left: 8px;
 
   button {
     border:none;
-    background-color: #303030;
+    background-color: #b1f5a4;
     margin: 2px;
     margin-bottom: 8px;
     clip-path: polygon(calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%, 8px 50%, 0% 0%);
 
     input {
       border: none;
-      color: white;
+      //color: white;
       background-color: transparent;
       font-size:1rem;
 
