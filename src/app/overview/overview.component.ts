@@ -1,8 +1,9 @@
 import {Component, ChangeDetectorRef} from '@angular/core';
 import GUN from "gun"
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {DeckComponent} from "../deck/deck.component";
+
 import {GunService} from "../gun.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-overview',
@@ -14,7 +15,7 @@ export class OverviewComponent {
   gDecks = this.gun.get("decks")
 
 
-  constructor(private changeDirectorRef: ChangeDetectorRef, public dialog: MatDialog, public gunService:GunService) {
+  constructor(public router:Router,private changeDirectorRef: ChangeDetectorRef, public dialog: MatDialog, public gunService:GunService) {
     console.log(this.gDecks)
 
     this.gDecks.map().on((data, key) => {
@@ -32,20 +33,7 @@ export class OverviewComponent {
   }
 
   openDialog(path: {name:string,uuid:string}[]) {
-
-    const dialogConfig = new MatDialogConfig()
-
-    dialogConfig.maxWidth = "30cm"
-    dialogConfig.width = "80vw"
-    dialogConfig.data = path
-
-    const dialogRef = this.dialog.open(DeckComponent, dialogConfig)
-    dialogRef.afterClosed().subscribe(result => {
-     console.log(`Dialog result: `, result)
-      if(result !== undefined){
-        this.openDialog(result)
-      }
-    })
+    this.router.navigate(["/deck", JSON.stringify(path)])
   }
 
 

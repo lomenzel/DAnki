@@ -18,9 +18,9 @@ mat-form-field {
   margin-right: 4px;
 }
 
-mat-expansion-panel{
+mat-expansion-panel {
   //background:#303030;
-  mat-expansion-panel-header{
+  mat-expansion-panel-header {
 
   }
 }
@@ -35,13 +35,14 @@ span {
     padding: 3px 12px;
 
   }
-  button:first-child{
+
+  button:first-child {
     clip-path: polygon(calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%, 0% 50%, 0% 0%);
-margin-left: 8px;
+    margin-left: 8px;
   }
 
   button {
-    border:none;
+    border: none;
     background-color: #b1f5a4;
     margin: 2px;
     margin-bottom: 8px;
@@ -51,13 +52,13 @@ margin-left: 8px;
       border: none;
       //color: white;
       background-color: transparent;
-      font-size:1rem;
-
+      font-size: 1rem;
 
 
     }
-    input:focus-visible{
-      border:2px solid transparent;
+
+    input:focus-visible {
+      border: 2px solid transparent;
       outline: none;
     }
   }

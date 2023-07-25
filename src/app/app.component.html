@@ -12,16 +12,11 @@
               aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
       </button> -->
-      <span>AnkiTube</span>
+      <span [routerLink]="['']">AnkiTube</span>
       <span class="example-spacer"></span>
-      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-        <mat-icon>download</mat-icon>
-      </button>
+
       <button (click)="openNoteTypesDialog()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
         <mat-icon>library_books</mat-icon>
-      </button>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>restore_from_trash</mat-icon>
       </button>
       <a target="_blank" href="https://github.com/leonderdunna/AnkiTube/issues" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
         <mat-icon>bug_report</mat-icon>

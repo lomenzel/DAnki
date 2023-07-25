@@ -1,6 +1,7 @@
 <span mat-dialog-title>
+  <button mat-icon-butto [routerLink]="['']"><mat-icon>home</mat-icon></button>
   <button mat-stroked-button *ngFor="let p of path | slice: 0:path.length-1"
-          [mat-dialog-close]="openDeck(p.uuid,true)">{{p.name}}</button>
+          (click)="openDeck(p.uuid,true)">{{p.name}}</button>
 
 <button mat-stroked-button>
   <mat-icon color="accent">edit</mat-icon>
@@ -46,7 +47,7 @@
             <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
               <mat-icon color="accent">download</mat-icon>
             </button>
-            <button mat-icon-button [mat-dialog-close]="openDeck(deck.uuid,false)" class="example-icon"
+            <button mat-icon-button (click)="openDeck(deck.uuid,false)" class="example-icon"
                     aria-label="Example icon-button with share icon">
               <mat-icon color="accent">edit</mat-icon>
             </button>
@@ -141,14 +142,10 @@
         <div class="wrapper">
           <div class="card-item" *ngFor="let card of cards">
             <mat-card>
-              <mat-card-header>
 
-                <mat-card-title *ngIf="card.type =='basic'">{{card.question}}</mat-card-title>
-
-              </mat-card-header>
               <mat-card-content>
-                <p *ngIf="card.type =='basic'">{{card.answer}}</p>
-                <p *ngIf="card.type =='cloze'">{{card.text}}</p>
+                <p *ngFor="let f of card.fields">{{f}}</p>
+
                 <mat-divider></mat-divider>
               </mat-card-content>
               <mat-card-actions>
@@ -172,6 +169,3 @@
 
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-button (click)="onClose()">SCHLIEßEN</button>
-</mat-dialog-actions>
