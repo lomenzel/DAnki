@@ -12,7 +12,7 @@ export class NotetypesComponent {
 
   }
   neu:string= "";
-  types = this.typesService.get()
+  types = this.typesService.get(true,()=>{this.types = this.typesService.get(true,undefined)})
 
   add(){
     if(this.neu){
@@ -20,4 +20,9 @@ export class NotetypesComponent {
       this.neu= ""
     }
   }
+  remove(id:string){
+    console.log("removing ", id)
+    this.typesService.remove(id)
+  }
+
 }

@@ -109,7 +109,7 @@ export class DeckComponent {
     this.cards = this.cards.filter(e => e.uuid !== key)
   }
 
-  types = this.typesService.get()
+  types = this.typesService.get(true,()=>{this.types = this.typesService.get(true,undefined); console.log(this.types)})
 
 
   newDeckName: string = ""
@@ -126,25 +126,13 @@ export class DeckComponent {
   }
 
   addNewCard() {
-    if (this.newCardType === "basic") {
-      if (this.newCardQuestion !== "" && this.newCardAnswer !== "") {
-        this.gCards.set({answer: this.newCardAnswer, question: this.newCardQuestion, type: this.newCardType})
-        this.newCardAnswer = ""
-        this.newCardQuestion = ""
-      }
-    }
-    if (this.newCardType === "cloze") {
-      if (this.newCardText !== "") {
-        this.gCards.set({text: this.newCardText, type: this.newCardType})
-        this.newCardText = ""
-      }
-    }
+
+    this.gCards.set({fields:this.newCardFields,type:this.newCardType})
+    this.newCardFields = [];
   }
 
   newCardType: string = "basic"
-  newCardAnswer: string = ""
-  newCardQuestion: string = ""
-  newCardText: string = ""
+  newCardFields:string[] = []
 
   gMaterials = this.gDeck.get("materials")
   gCards = this.gDeck.get("cards")

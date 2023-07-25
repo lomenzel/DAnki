@@ -14,36 +14,40 @@ export class TypesService {
 
   gun = this.gunService.get().get("ankitube-types")
 
-  types: any[] = [123]
+  types: any[] = []
 
   event(data: any, key: string) {
     //console.log("data", data, "key", key, "types", this.types)
     //console.log("gun", this.gun)
+    this.types = this.types.filter(e => e.key != key)
+    if (data)
+      fetch("http://localhost:8080/ipfs/" + data.cid + "/manifest.json")
+        .then(a => {
+          //console.log("try json parse", data.cid, a);
+          return a.json()
+        }).then(d => {
+        //console.log("!!!!! Hier daten", d, data)
 
 
-    fetch("http://localhost:8080/ipfs/" + data.cid + "/manifest.json")
-      .then(a => {
-        console.log("try json parse", data.cid, a);
-        return a.json()
-      }).then(d => {
-      console.log("!!!!! Hier daten" + d, data)
-      this.types = this.types.filter(e => e.key != key)
-      this.types.push({"key": key, "value": {...d, "cid": data.cid}})
-    }).catch(e => {
-    })
+        this.types.push({"key": key, "value": {...d, "cid": data.cid}})
+      }).catch(e => {
+        this.types.push({"key": key, "value": {...data, "error": true}})
+      })
 
 
   }
 
-  get(): any[] {
+  get(withErrors: boolean, onChange: undefined | (() => void)): any[] {
+    if (onChange !== undefined)
+      this.gun.map().on(onChange)
+    if (withErrors)
+      return this.types
+    else
+      return this.types.filter(e => !e.value.error)
+  }
 
-
-    //console.log("get-types", this.types)
-    return this.types
-    //.map(e => {
-    //return {"id": e.key, "cid": e.value}
-    //})
-
+  getFields(cid:string){
+    return this.types.filter(e=>e.value.cid == cid)[0]?.value.fields
   }
 
   add(cid: string) {

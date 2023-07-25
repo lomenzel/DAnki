@@ -121,24 +121,17 @@
           <mat-form-field appearance="fill">
             <mat-label>Kartentyp</mat-label>
             <mat-select [(value)]="newCardType">
-              <mat-option *ngFor="let type of types" [value]="type">
-                {{type}}
+              <mat-option *ngFor="let type of types" [value]="type.value.cid">
+                {{type.value.title}} ({{type.value.cid}})
               </mat-option>
             </mat-select>
           </mat-form-field>
           <br>
-          <mat-form-field class="example-full-width" *ngIf="newCardType == 'cloze'">
-            <mat-label>Text</mat-label>
-            <textarea [(ngModel)]="newCardText" matInput> </textarea>
+          <mat-form-field class="example-full-width" *ngFor="let t of typesService.getFields(newCardType); index as i">
+            <mat-label>{{t}}</mat-label>
+            <textarea [(ngModel)]="newCardFields[i]" matInput> </textarea>
           </mat-form-field>
-          <mat-form-field class="example-full-width" *ngIf="newCardType == 'basic'">
-            <mat-label>Frage</mat-label>
-            <textarea [(ngModel)]="newCardQuestion" matInput></textarea>
-          </mat-form-field>
-          <mat-form-field class="example-full-width" *ngIf="newCardType == 'basic'">
-            <mat-label>Antwort</mat-label>
-            <textarea [(ngModel)]="newCardAnswer" matInput></textarea>
-          </mat-form-field>
+
 
           <button (click)="addNewCard()" mat-icon-button class="example-icon"
                   aria-label="Example icon-button with share icon">
