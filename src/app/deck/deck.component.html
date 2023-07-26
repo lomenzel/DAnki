@@ -1,11 +1,11 @@
 <span mat-dialog-title>
-  <button mat-icon-butto [routerLink]="['']"><mat-icon>home</mat-icon></button>
+  <button mat-stroked-button [routerLink]="['']"><mat-icon>home</mat-icon></button>
   <button mat-stroked-button *ngFor="let p of path | slice: 0:path.length-1"
-          (click)="openDeck(p.uuid,true)">{{p.name}}</button>
+          (click)="openDeck(p.uuid,true)" [class]="p.deleted?'deleted':'active'">{{p.name}}</button>
 
-<button mat-stroked-button>
-  <mat-icon color="accent">edit</mat-icon>
-  <input (ngModelChange)="updateName()" [(ngModel)]="path[path.length-1].name" matInput placeholder="" value="">
+  <button mat-stroked-button [class]="path[path.length-1].deleted?'deleted':'active'">
+    <mat-icon color="accent">edit</mat-icon>
+    <input (ngModelChange)="updateName()" [(ngModel)]="path[path.length-1].name" matInput placeholder="" value="">
   </button>
 </span>
 
@@ -16,7 +16,9 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>Decks</mat-expansion-panel-header>
 
-      <mat-card-header><mat-panel-title>Neues Deck</mat-panel-title></mat-card-header>
+      <mat-card-header>
+        <mat-panel-title>Neues Deck</mat-panel-title>
+      </mat-card-header>
 
 
       <mat-card-content>
@@ -65,103 +67,112 @@
     </mat-expansion-panel>
     <mat-expansion-panel>
 
-      <mat-expansion-panel-header><mat-panel-title>Material</mat-panel-title></mat-expansion-panel-header>
-        <mat-card-header>Neues Material</mat-card-header>
-        <mat-card-content>
-          <mat-form-field class="example-full-width">
-            <mat-label>Name</mat-label>
-            <input [(ngModel)]="newMatName" matInput placeholder="" value="">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Link</mat-label>
-            <input [(ngModel)]="newMatLink" matInput placeholder="" value="">
-          </mat-form-field>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Material</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-card-header>Neues Material</mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input [(ngModel)]="newMatName" matInput placeholder="" value="">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Link</mat-label>
+          <input [(ngModel)]="newMatLink" matInput placeholder="" value="">
+        </mat-form-field>
 
-          <button (click)="addNewMat()" mat-icon-button class="example-icon"
-                  aria-label="Example icon-button with share icon">
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-card-content>
+        <button (click)="addNewMat()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with share icon">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-content>
 
-        <div class="wrapper">
-          <mat-card *ngFor="let m of materials">
+      <div class="wrapper">
+        <mat-card *ngFor="let m of materials">
 
-            <mat-card-header>
-              <mat-card-subtitle>{{m.link}}</mat-card-subtitle>
-              <mat-card-title>{{m.name}}</mat-card-title>
-            </mat-card-header>
+          <mat-card-header>
+            <mat-card-subtitle>{{m.link}}</mat-card-subtitle>
+            <mat-card-title>{{m.name}}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+
+            <mat-divider></mat-divider>
+          </mat-card-content>
+          <mat-card-actions>
+
+            <a [href]="m.link" target="_blank" mat-icon-button class="example-icon"
+               aria-label="Example icon-button with share icon">
+              <mat-icon color="accent">open_in_new</mat-icon>
+            </a>
+            <button (click)="removeMat(m.uuid)" mat-icon-button class="example-icon"
+                    aria-label="Example icon-button with share icon">
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+          </mat-card-actions>
+
+
+        </mat-card>
+      </div>
+
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Karten</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-card-header>Neue Karte</mat-card-header>
+
+
+      <mat-card-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Kartentyp</mat-label>
+          <mat-select [(value)]="newCardType">
+            <mat-option *ngFor="let type of types" [value]="type.value.cid">
+              {{type.value.title}} ({{type.value.cid}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width" *ngFor="let t of typesService.getFields(newCardType); index as i">
+          <mat-label>{{t}}</mat-label>
+          <textarea [(ngModel)]="newCardFields[i]" matInput> </textarea>
+        </mat-form-field>
+
+
+        <button (click)="addNewCard()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with share icon">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-content>
+      <div class="wrapper">
+        <div class="card-item" *ngFor="let card of cards">
+          <mat-card>
+
             <mat-card-content>
+              <p *ngFor="let f of card.fields">{{f}}</p>
 
               <mat-divider></mat-divider>
             </mat-card-content>
             <mat-card-actions>
 
-              <a [href]="m.link" target="_blank" mat-icon-button class="example-icon"
-                 aria-label="Example icon-button with share icon">
-                <mat-icon color="accent">open_in_new</mat-icon>
-              </a>
-              <button (click)="removeMat(m.uuid)" mat-icon-button class="example-icon"
-                      aria-label="Example icon-button with share icon">
-                <mat-icon color="warn">delete</mat-icon>
+              <button  mat-icon-button class="example-icon"
+                       aria-label="Example icon-button with share icon">
+                <mat-icon color="accent">preview</mat-icon>
               </button>
+
+              <button  mat-icon-button class="example-icon"
+                       aria-label="Example icon-button with share icon">
+                <mat-icon color="accent">edit</mat-icon>
+              </button>  <button (click)="removeCard(card.uuid)" mat-icon-button class="example-icon"
+                                 aria-label="Example icon-button with share icon">
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+
+
             </mat-card-actions>
-
-
           </mat-card>
         </div>
 
-    </mat-expansion-panel>
-    <mat-expansion-panel>
-     <mat-expansion-panel-header>
-        <mat-panel-title>Karten</mat-panel-title>
-      </mat-expansion-panel-header>
-        <mat-card-header>Neue Karte</mat-card-header>
-
-
-        <mat-card-content>
-          <mat-form-field appearance="fill">
-            <mat-label>Kartentyp</mat-label>
-            <mat-select [(value)]="newCardType">
-              <mat-option *ngFor="let type of types" [value]="type.value.cid">
-                {{type.value.title}} ({{type.value.cid}})
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br>
-          <mat-form-field class="example-full-width" *ngFor="let t of typesService.getFields(newCardType); index as i">
-            <mat-label>{{t}}</mat-label>
-            <textarea [(ngModel)]="newCardFields[i]" matInput> </textarea>
-          </mat-form-field>
-
-
-          <button (click)="addNewCard()" mat-icon-button class="example-icon"
-                  aria-label="Example icon-button with share icon">
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-card-content>
-        <div class="wrapper">
-          <div class="card-item" *ngFor="let card of cards">
-            <mat-card>
-
-              <mat-card-content>
-                <p *ngFor="let f of card.fields">{{f}}</p>
-
-                <mat-divider></mat-divider>
-              </mat-card-content>
-              <mat-card-actions>
-
-
-                <button (click)="removeCard(card.uuid)" mat-icon-button class="example-icon"
-                        aria-label="Example icon-button with share icon">
-                  <mat-icon color="warn">delete</mat-icon>
-                </button>
-
-
-              </mat-card-actions>
-            </mat-card>
-          </div>
-
-        </div>
+      </div>
 
     </mat-expansion-panel>
   </mat-accordion>

@@ -10,9 +10,10 @@
 
   <mat-list>
     <mat-list-item *ngFor="let t of types">
+      <button mat-icon-button (click)="remove(t.key)" color="warn"><mat-icon>delete</mat-icon></button>
       <span *ngIf="t.value.error">nicht gefunden</span>
       <span *ngIf="t.value.title">{{t.value.title}}</span>
       ({{t.value.cid}})
-      <button mat-icon-button (click)="remove(t.key)" color="warn"><mat-icon>delete</mat-icon></button></mat-list-item>
+    </mat-list-item>
   </mat-list>
 </mat-dialog-content>

@@ -33,11 +33,18 @@ export class DeckComponent {
         this.path = this.data
         //let uuid: string = this.data[this.data.length - 1].uuid
         let tmp = this.gun.get("decks").get(this.data[0].uuid)
-
+        tmp.on((data,key,_msg,_ev)=>{
+          this.listeners.push(_ev)
+          this.path[0] = {name:data.name,uuid:key,deleted:data.deleted}
+        })
 
         if (this.data.length > 1) {
           for (let i = 1; i < this.data.length; i++) {
             tmp = tmp.get("decks").get(this.data[i].uuid)
+            tmp.on((data,key,_msg,_ev)=>{
+              this.listeners.push(_ev)
+              this.path[i] = {name:data.name,uuid:key, deleted:data.deleted}
+            })
           }
         }
 
@@ -53,7 +60,7 @@ export class DeckComponent {
           this.listeners.push(_ev)
           data.uuid = key
           this.deck = data
-          this.path[this.path.length - 1] = {name: data.name, uuid: key}
+          //this.path[this.path.length - 1] = {name: data.name, uuid: key}
         })
 
         this.gMaterials.map().on((data, key, _msg, _ev) => {
@@ -67,7 +74,7 @@ export class DeckComponent {
         this.gCards.map().on((data, key, _msg, _ev) => {
           this.listeners.push(_ev)
           this.cards = this.cards.filter(e => e.uuid !== key)
-          if (data !== null) {
+          if (data !== null && !data.deleted) {
             data.uuid = key
 
             try {
@@ -80,7 +87,7 @@ export class DeckComponent {
         this.gDecks.map().on((data, key, _msg, _ev) => {
           this.listeners.push(_ev)
           this.decks = this.decks.filter(e => e.uuid !== key)
-          if (data !== null) {
+          if (data !== null && !data.deleted) {
             data.uuid = key
             this.decks.push(data)
           }
@@ -103,7 +110,7 @@ export class DeckComponent {
   gun = this.gunService.get()
   gDeck: IGunChain<any, IGunChain<any, IGunInstance<any>, IGunInstance<any>, "decks">, IGunInstance<any>, string> = this.gun.get(`decks/${this.data}`)
 
-  path: { name: string, uuid: string }[] = [{name: "Lädt...", uuid: ""}]
+  path: { name: string, uuid: string, deleted:true|false|undefined }[] = [{name: "Lädt...", uuid: "",deleted:false}]
   deck = {name: "Lädt...", uuid: ""}
 
   decks: any[] = [];
@@ -117,8 +124,8 @@ export class DeckComponent {
   }
 
   remove(key: string) {
-    this.gDecks.get(key).put(null)
-    this.decks = this.decks.filter(e => e.uuid !== key)
+    this.gDecks.get(key).put({deleted:true})
+    //this.decks = this.decks.filter(e => e.uuid !== key)
 
   }
 
@@ -128,7 +135,7 @@ export class DeckComponent {
   }
 
   removeCard(key: string) {
-    this.gCards.get(key).put(null)
+    this.gCards.get(key).put({deleted:true})
     this.cards = this.cards.filter(e => e.uuid !== key)
   }
 

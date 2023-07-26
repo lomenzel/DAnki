@@ -22,6 +22,10 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatExpansionModule} from '@angular/material/expansion';
 import { NotetypesComponent } from './notetypes/notetypes.component';
 import { SettingsComponent } from './settings/settings.component';
+import { CardViewComponent } from './card/card-view/card-view.component';
+import { CardEditComponent } from './card/card-edit/card-edit.component';
+import { CardPreviewComponent } from './card/card-preview/card-preview.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -32,6 +36,9 @@ import { SettingsComponent } from './settings/settings.component';
     DeckComponent,
     NotetypesComponent,
     SettingsComponent,
+    CardViewComponent,
+    CardEditComponent,
+    CardPreviewComponent,
 
   ],
   imports: [
@@ -50,7 +57,8 @@ import { SettingsComponent } from './settings/settings.component';
     MatInputModule,
     MatDialogModule,
     MatChipsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

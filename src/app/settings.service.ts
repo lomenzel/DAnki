@@ -28,7 +28,7 @@ export class SettingsService {
 
   getIpfsGateway(): string {
     if (!localStorage.getItem("ipfsGateway"))
-      return "https://ipfs.io/ipfs/"
+      return "https://dweb.link/ipfs/"
     else { // @ts-ignore
       return localStorage.getItem("ipfsGateway")
     }

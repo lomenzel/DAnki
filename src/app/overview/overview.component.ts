@@ -22,7 +22,7 @@ export class OverviewComponent {
 
 
       this.decks = this.decks.filter(e => e.uuid !== key)
-      if (data != null) {
+      if (data != null &&!data.deleted) {
         data.uuid = key
         this.decks.push(data)
       }
@@ -38,8 +38,8 @@ export class OverviewComponent {
 
 
   remove(key: string) {
-    this.gDecks.get(key).put(null)
-    this.decks = this.decks.filter(e => e.uuid !== key)
+    this.gDecks.get(key).put({deleted:true})
+    //this.decks = this.decks.filter(e => e.uuid !== key)
     this.changeDirectorRef.detectChanges()
   }
 
