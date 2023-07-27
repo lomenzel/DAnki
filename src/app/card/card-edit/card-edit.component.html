@@ -1,1 +1,19 @@
-<p>card-edit works!</p>
+
+<mat-card-content>
+  <!--  <mat-form-field appearance="fill">
+    <mat-label>Kartentyp</mat-label>
+  <mat-select [(value)]="newCardType">
+      <mat-option *ngFor="let type of types" [value]="type.value.cid">
+        {{type.value.title}} ({{type.value.cid}})
+      </mat-option>
+    </mat-select>
+  </mat-form-field>!-->
+  <br>
+  <mat-form-field class="example-full-width" *ngFor="let t of typesService.getFields(card.type); index as i">
+    <mat-label>{{t}}</mat-label>
+    <textarea (ngModelChange)="update()" [(ngModel)]="card.fields[i]" matInput> </textarea>
+  </mat-form-field>
+
+
+
+</mat-card-content>

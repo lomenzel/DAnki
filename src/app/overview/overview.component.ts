@@ -4,6 +4,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 import {GunService} from "../gun.service";
 import {Router} from "@angular/router";
+import {DownloadComponent} from "../download/download.component";
 
 @Component({
   selector: 'app-overview',
@@ -55,6 +56,12 @@ export class OverviewComponent {
   decks: { name: string, uuid: string }[] = []
   filter = {
     path: "Blablabla"
+  }
+
+  openDownloadDialog(deck:{name:string,uuid:string}){
+    const dialogConfig:MatDialogConfig = new MatDialogConfig()
+    dialogConfig.data = {path:[],deck:deck}
+    this.dialog.open(DownloadComponent,dialogConfig)
   }
 }
 

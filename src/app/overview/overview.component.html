@@ -28,7 +28,7 @@
         <mat-divider></mat-divider>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <button mat-icon-button (click)="openDownloadDialog({name:deck.name,uuid:deck.uuid})" class="example-icon" aria-label="Example icon-button with share icon">
           <mat-icon color="accent">download</mat-icon>
         </button>
         <button (click)="openDialog([{name:deck.name,uuid:deck.uuid}])" mat-icon-button class="example-icon"

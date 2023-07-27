@@ -4,6 +4,10 @@ import {GunService} from "../gun.service";
 import {TypesService} from "../types.service";
 import {Router} from "@angular/router";
 import {ActivatedRoute} from '@angular/router';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {CardEditComponent} from "../card/card-edit/card-edit.component";
+import {DownloadComponent} from "../download/download.component";
+import {DownloadService} from "../download.service";
 
 
 @Component({
@@ -16,34 +20,35 @@ export class DeckComponent {
   data: any[] = []
 
   constructor(
+    public dialog: MatDialog,
     public gunService: GunService,
     public typesService: TypesService,
     private router: Router,
     private route: ActivatedRoute,
+    private downloadService: DownloadService,
     private changeDirectorRef: ChangeDetectorRef) {
     this.route.paramMap.subscribe(params => {
       const jsonData = params.get('path');
       try {
         if (jsonData) {
           this.data = JSON.parse(jsonData);
-        }
-        else{
-          console.log("wtf",jsonData)
+        } else {
+          console.log("wtf", jsonData)
         }
         this.path = this.data
         //let uuid: string = this.data[this.data.length - 1].uuid
         let tmp = this.gun.get("decks").get(this.data[0].uuid)
-        tmp.on((data,key,_msg,_ev)=>{
+        tmp.on((data, key, _msg, _ev) => {
           this.listeners.push(_ev)
-          this.path[0] = {name:data.name,uuid:key,deleted:data.deleted}
+          this.path[0] = {name: data.name, uuid: key, deleted: data.deleted}
         })
 
         if (this.data.length > 1) {
           for (let i = 1; i < this.data.length; i++) {
             tmp = tmp.get("decks").get(this.data[i].uuid)
-            tmp.on((data,key,_msg,_ev)=>{
+            tmp.on((data, key, _msg, _ev) => {
               this.listeners.push(_ev)
-              this.path[i] = {name:data.name,uuid:key, deleted:data.deleted}
+              this.path[i] = {name: data.name, uuid: key, deleted: data.deleted}
             })
           }
         }
@@ -55,7 +60,7 @@ export class DeckComponent {
         this.gCards = this.gDeck.get("cards")
         this.gMaterials = this.gDeck.get("materials")
 
-        this.gDeck.on((data, key,_msg,_ev) => {
+        this.gDeck.on((data, key, _msg, _ev) => {
           //console.log("gDeckOn", data, key)
           this.listeners.push(_ev)
           data.uuid = key
@@ -93,7 +98,7 @@ export class DeckComponent {
           }
         })
       } catch (e) {
-        console.error("incorrect path",e)
+        console.error("incorrect path", e)
         this.router.navigate([""])
       }
       console.log("path: ", this.data); // Hier hast du den geparsten JSON-Wert
@@ -110,7 +115,11 @@ export class DeckComponent {
   gun = this.gunService.get()
   gDeck: IGunChain<any, IGunChain<any, IGunInstance<any>, IGunInstance<any>, "decks">, IGunInstance<any>, string> = this.gun.get(`decks/${this.data}`)
 
-  path: { name: string, uuid: string, deleted:true|false|undefined }[] = [{name: "Lädt...", uuid: "",deleted:false}]
+  path: { name: string, uuid: string, deleted: true | false | undefined }[] = [{
+    name: "Lädt...",
+    uuid: "",
+    deleted: false
+  }]
   deck = {name: "Lädt...", uuid: ""}
 
   decks: any[] = [];
@@ -124,7 +133,7 @@ export class DeckComponent {
   }
 
   remove(key: string) {
-    this.gDecks.get(key).put({deleted:true})
+    this.gDecks.get(key).put({deleted: true})
     //this.decks = this.decks.filter(e => e.uuid !== key)
 
   }
@@ -135,7 +144,7 @@ export class DeckComponent {
   }
 
   removeCard(key: string) {
-    this.gCards.get(key).put({deleted:true})
+    this.gCards.get(key).put({deleted: true})
     this.cards = this.cards.filter(e => e.uuid !== key)
   }
 
@@ -187,16 +196,44 @@ export class DeckComponent {
     this.decks = [];
     this.cards = [];
     this.materials = [];
-    this.deck = {uuid: "", name:""}
+    this.deck = {uuid: "", name: ""}
 
     console.log(JSON.stringify(newPath))
     this.router.navigate(["/deck", JSON.stringify(newPath)])
 
   }
+
+  openDialog(path: { name: string, uuid: string }[], uuid: string) {
+
+    const dialogConfig = new MatDialogConfig()
+
+    //dialogConfig.maxWidth = "30cm"
+    //dialogConfig.width = "80vw"
+    dialogConfig.data = {path: path, uuid: uuid}
+
+    this.dialog.open(CardEditComponent, dialogConfig)
+
+  }
+
+
   removeListeners() {
     this.listeners.forEach(listener => listener.off());
     this.listeners = [];
   }
 
+  openPreview(uuid: string) {
+    this.router.navigate(["/card/preview", JSON.stringify(this.path), uuid])
+  }
 
+  openDownloadDialog(path: { name: string, uuid: string }[], deck: { name: string, uuid: string }) {
+    const dialogConfig: MatDialogConfig = new MatDialogConfig()
+    dialogConfig.data = {path: path, deck: deck}
+    this.dialog.open(DownloadComponent, dialogConfig)
+  }
+
+  download(path: { name: string; uuid: string; deleted: boolean | undefined }[], deck: any) {
+    let newPath = [...path]
+    newPath.push(deck)
+    this.downloadService.download(newPath)
+  }
 }

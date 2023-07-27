@@ -26,6 +26,7 @@ import { CardViewComponent } from './card/card-view/card-view.component';
 import { CardEditComponent } from './card/card-edit/card-edit.component';
 import { CardPreviewComponent } from './card/card-preview/card-preview.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { DownloadComponent } from './download/download.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     CardViewComponent,
     CardEditComponent,
     CardPreviewComponent,
+    DownloadComponent,
 
   ],
   imports: [

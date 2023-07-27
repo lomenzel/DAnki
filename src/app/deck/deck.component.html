@@ -46,7 +46,7 @@
             <mat-divider></mat-divider>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+            <button mat-icon-button (click)="download(path,deck)" class="example-icon" aria-label="Example icon-button with share icon">
               <mat-icon color="accent">download</mat-icon>
             </button>
             <button mat-icon-button (click)="openDeck(deck.uuid,false)" class="example-icon"
@@ -146,7 +146,9 @@
       <div class="wrapper">
         <div class="card-item" *ngFor="let card of cards">
           <mat-card>
-
+            <mat-card-header>
+              <mat-card-subtitle>{{card.uuid}}</mat-card-subtitle>
+            </mat-card-header>
             <mat-card-content>
               <p *ngFor="let f of card.fields">{{f}}</p>
 
@@ -154,18 +156,19 @@
             </mat-card-content>
             <mat-card-actions>
 
-              <button  mat-icon-button class="example-icon"
-                       aria-label="Example icon-button with share icon">
+              <button (click)="openPreview(card.uuid)" mat-icon-button class="example-icon"
+                      aria-label="Example icon-button with share icon">
                 <mat-icon color="accent">preview</mat-icon>
               </button>
 
-              <button  mat-icon-button class="example-icon"
-                       aria-label="Example icon-button with share icon">
+              <button (click)="openDialog(path,card.uuid)" mat-icon-button class="example-icon"
+                      aria-label="Example icon-button with share icon">
                 <mat-icon color="accent">edit</mat-icon>
-              </button>  <button (click)="removeCard(card.uuid)" mat-icon-button class="example-icon"
-                                 aria-label="Example icon-button with share icon">
-              <mat-icon color="warn">delete</mat-icon>
-            </button>
+              </button>
+              <button (click)="removeCard(card.uuid)" mat-icon-button class="example-icon"
+                      aria-label="Example icon-button with share icon">
+                <mat-icon color="warn">delete</mat-icon>
+              </button>
 
 
             </mat-card-actions>

@@ -19,6 +19,11 @@ export class SettingsComponent {
     this.gunServers = this.settingsService.getGunServer()
   }
 
+  removeGun(server:string){
+    this.settingsService.removeGunServer(server);
+    this.gunServers = this.settingsService.getGunServer()
+  }
+
   newIpfs = ""
 
   setIpfs() {

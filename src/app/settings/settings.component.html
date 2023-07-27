@@ -10,7 +10,7 @@
 <button (click)="addGun()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
   <mat-icon >add</mat-icon>
 </button>
-<p *ngFor="let g of gunServers">{{g}} <button mat-icon-button><mat-icon>delete</mat-icon></button></p>
+<p *ngFor="let g of gunServers">{{g}} <button (click)="removeGun(g)" mat-icon-button><mat-icon>delete</mat-icon></button></p>
 
 <h1>IPFS</h1>
 <p>{{ipfsGateway}}</p>
