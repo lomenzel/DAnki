@@ -6,21 +6,24 @@ export interface CrowdAnkiNoteModelModel {
     collapsed:boolean;
     description:string;
     font:string;
-    media:[];
+    //media:any[];
     name:string;
     ord:number;
     plainText:boolean;
     rtl:boolean;
     size:number;
-    sticky:boolean
+    sticky:boolean;
+    excludeFromSearch:boolean;
+
   }[];
   latexPost:string;
   latexPre:string;
   latexsvg:boolean;
   name:string;
-  req:((number | "any"| number[])[])[]
+  originalStockKind:number;
+  req:((number | "any"|"none"| number[])[])[]
   sortf:number;
-  tags:string[];
+  //tags:string[];
   tmpls:{
     afmt:string;
     bafmt:string;
@@ -33,5 +36,5 @@ export interface CrowdAnkiNoteModelModel {
     qfmt:string;
   }[]
   type:number;
-  vers:[]
+  //vers:[]
 }

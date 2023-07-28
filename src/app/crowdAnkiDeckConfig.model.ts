@@ -21,7 +21,7 @@ export interface CrowdAnkiDeckConfigModel {
     ints:number[];
     order:number;
     perDay:number;
-    seperate:boolean;
+    separate:boolean;
   }
   newGatherPriority:number;
   newMix:number;

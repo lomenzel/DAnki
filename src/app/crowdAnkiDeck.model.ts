@@ -8,9 +8,10 @@ export interface CrowdAnkiDeckModel{
   deck_config_uuid:string;
   desc:"";
   dyn:0;
-  extendedNew:0;
-  extendedRev:0;
+  extendNew:0;
+  extendRev:0;
   media_files:[];
+  name:string,
   newLimit:null;
   newLimitToday:null;
   notes:CrowdAnkiNoteModel[];
