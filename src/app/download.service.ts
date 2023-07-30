@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {CrowdAnkiBaseDeckModel} from "./crowdAnkiBaseDeck.model";
 import {CrowdAnkiDeckModel} from "./crowdAnkiDeck.model";
 import {GunService} from "./gun.service";
-import {IGunChain} from "gun";
+import {IGun, IGunChain} from "gun";
 import {CrowdAnkiNoteModel} from "./crowdAnkiNote.model";
+
 
 interface RawDeck {
   //material:{name:string,href:string}[],
@@ -31,10 +32,12 @@ export class DownloadService {
   constructor(private gunService: GunService) {
   }
 
-  async download(path: { name: string, uuid: string }[]): Promise<void> {
-    console.log("Deck:" + JSON.stringify(this.makeBaseDeck(this.makeCrowdankiDeck( await this.getRawDeck(this.getGunBase(path), path)))))
-    this.downloadFile(this.makeTextFile(JSON.stringify(this.makeBaseDeck(this.makeCrowdankiDeck( await this.getRawDeck(this.getGunBase(path), path))))))
-
+  async download(path: { name: string, uuid: string }[]): Promise<boolean> {
+    console.log("START: Download")
+    console.log("Deck:", this.makeBaseDeck(this.makeCrowdankiDeck(await this.getRawDeck(this.getGunBase(path), path))))
+    //this.downloadFile(this.makeTextFile(JSON.stringify(this.makeBaseDeck(this.makeCrowdankiDeck(await this.getRawDeck(this.getGunBase(path), path))))))
+    console.log("END: Download")
+    return true;
   }
 
 
@@ -58,81 +61,106 @@ export class DownloadService {
     }
   }
 
-  makeCrowdankiNote(card:DeckCard):CrowdAnkiNoteModel{
+  makeCrowdankiNote(card: DeckCard): CrowdAnkiNoteModel {
     return {
-      __type__:"Note",
-      fields:[JSON.stringify(card.path),card.uuid],
-      guid:"",
-      note_model_uuid:this.ankitubeNodeModelUuid,
-      tags:["ankitube"]
+      __type__: "Note",
+      fields: [encodeURIComponent(JSON.stringify(card.path)), card.uuid],
+      guid: "",
+      note_model_uuid: this.ankitubeNodeModelUuid,
+      tags: ["ankitube"]
     }
   }
+
   getGunBase(path: Path[]): IGunChain<any> {
+    console.log("START: GetGunBase")
     let tmp = this.gun.get("decks").get(path[0].uuid)
     if (path.length > 1) {
       for (let i = 1; i < path.length; i++) {
         tmp = tmp.get("decks").get(path[i].uuid)
       }
     }
+    console.log("END: GetGunBase", tmp)
     return tmp
   }
 
-  /*
-  getRawDeck(gun:IGunChain<any>,path:Path[]):RawDeck{
-    //TODO deal with async
-    let deck:RawDeck= {cards:[],decks:[],uuid:"",name:"",}
-    gun.once((data,key)=>{
-      deck.uuid = key
-      deck.name = data.name
-    })
-    gun.get("cards").map().once((data,key)=>{
-      deck.cards.push({path:path,uuid:key})
-    })
-    gun.get("decks").map().once((data,key)=>{
-      let  newPath = [...path]
-      newPath.push({uuid:key,name:data.name})
-      deck.decks.push(this.getRawDeck(gun.get("decks").get(key),newPath))
-    })
-    return deck
+
+  async getRawDeck(gun: IGunChain<any>, path: Path[]): Promise<RawDeck> {
+    console.log("START: getRawDeck");
+
+
+    const deck: RawDeck = {
+      cards: await this.getCards(this.getGunBase(path), path),
+      decks: [],
+      name: await this.getName(path),  // @ts-ignore
+      uuid: path.at(-1).uuid,
+    };
+
+    // Call getDecks and wait for the result using await
+    const aggregatedPaths = await this.getDecks(gun, path);
+
+    // Use Promise.all to handle all the recursive calls to getRawDeck asynchronously
+    const deckPromises = aggregatedPaths.map((p) => this.getRawDeck(this.getGunBase(p), p));
+    deck.decks = await Promise.all(deckPromises);
+
+    console.log("END: getRawDeck", deck);
+    return deck;
   }
 
-   */
 
+  async getCards(gun: IGunChain<any>, path: Path[]): Promise<DeckCard[]> {
+    return new Promise<DeckCard[]>((resolve) => {
+      let aggregatedData: DeckCard[] = []
+      gun.get("cards").once((data, key) => {
+        if (data == null) {
+          console.error("no cards", path)
+          resolve(aggregatedData)
+        } else {
+          let uuids = Object.keys(data)
+          uuids = uuids.filter(e => e != "_")
+          for(let uuid of uuids){
+            aggregatedData.push({path:path,uuid:uuid})
+          }
+          resolve(aggregatedData)
+        }
+      })
+    })
+  }
 
-  //ChatGPTs versuch:
-  async getRawDeck(gun: IGunChain<any>, path: Path[]): Promise<RawDeck> {
-    const deck: RawDeck = {cards: [], decks: [], uuid: "", name: ""};
+  async getDecks(gun: IGunChain<any>, path: Path[]): Promise<Path[][]> {
+    console.log("CALLED: getDecks")
+    return new Promise<Path[][]>((resolve) => {
+      const aggregatedData: Path[][] = [];
 
-    // Wrap the first async operation in a Promise to handle asynchronously
-    await new Promise<void>((resolve) => {
+      gun.get("decks").once(async (data, key) => {
+        if (data == null) {
+          console.error(path)
+          resolve(aggregatedData)
+        } else {
+          console.log("GET_DECKS_ONCE", Object.keys(data))
+          let uuids = Object.keys(data)
+          uuids = uuids.filter(e => e != "_")
+          for (let uuid of uuids) {
+            aggregatedData.push([...path, {uuid: uuid, name: await this.getName([...path, {uuid: uuid, name: ""}])}])
+          }
+          resolve(aggregatedData)
+        }
+      })
+    });
+  }
+
+  async getName(path: Path[]): Promise<string> {
+    let gun = this.getGunBase(path)
+    return new Promise<string>((resolve) => {
       gun.once((data, key) => {
-        deck.uuid = key;
-        deck.name = data.name;
-        resolve(); // Resolve the promise once the data is retrieved
-      });
-    });
-
-    // Wrap the map() operation in a Promise to handle asynchronously
-    deck.cards = await new Promise<DeckCard[]>((resolve) => {
-      const cards: DeckCard[] = [];
-      gun.get("cards").map().once((data, key) => {
-        cards.push({path: path, uuid: key});
-      }).once(() => resolve(cards));
-    });
-
-    // Wrap the map() operation for sub-decks in a Promise to handle asynchronously
-    deck.decks = await new Promise<RawDeck[]>((resolve) => {
-      const decks: RawDeck[] = [];
-      gun.get("decks").map().once((data, key) => {
-        const newPath = [...path];
-        newPath.push({uuid: key, name: data.name});
-        this.getRawDeck(gun.get("decks").get(key), newPath).then((subDeck) => {
-          decks.push(subDeck);
-        });
-      }).once(() => resolve(decks));
-    });
-
-    return deck; // Return the fully assembled "deck" object
+        if (data) {
+          console.log("GET NAME:", data)
+          resolve(data.name)
+        } else {
+          console.error(path)
+          resolve("not found")
+        }
+      })
+    })
   }
 
 
@@ -257,7 +285,13 @@ export class DownloadService {
       {
         "__type__": "NoteModel",
         "crowdanki_uuid": "ae7d8d10-2d28-11ee-a20a-072d319e12c7",
-        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n",
+        "css": "html,body,iframe{\n" +
+          "height:100vh;\n" +
+          "width:100vw;\n" +
+          "border:none;\n" +
+          "padding:0;\n" +
+          "margin:0\n" +
+          "}",
         "flds": [
           {
             "collapsed": false,
@@ -299,7 +333,7 @@ export class DownloadService {
         "sortf": 0,
         "tmpls": [
           {
-            "afmt": "{{FrontSide}}\n\n<hr id=answer>\n\n{{uuid}}",
+            "afmt": "<iframe src='https://dweb.link/ipfs/QmS58U2jWHrr6gUbLLomT7b443Bsqob297jFiVs4jKYHVQ/#/card/view/{{path}}/{{uuid}}?back=true'>",
             "bafmt": "",
             "bfont": "",
             "bqfmt": "",
@@ -307,7 +341,7 @@ export class DownloadService {
             "did": null,
             "name": "Karte 1",
             "ord": 0,
-            "qfmt": "{{path}}"
+            "qfmt": "<iframe src='https://dweb.link/ipfs/QmS58U2jWHrr6gUbLLomT7b443Bsqob297jFiVs4jKYHVQ/#/card/view/{{path}}/{{uuid}}'>"
           }
         ],
         "type": 0

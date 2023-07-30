@@ -235,5 +235,6 @@ export class DeckComponent {
     let newPath = [...path]
     newPath.push(deck)
     this.downloadService.download(newPath)
+    console.log(newPath)
   }
 }
