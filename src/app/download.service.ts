@@ -33,10 +33,10 @@ export class DownloadService {
   }
 
   async download(path: { name: string, uuid: string }[]): Promise<boolean> {
-    console.log("START: Download")
-    console.log("Deck:", this.makeBaseDeck(this.makeCrowdankiDeck(await this.getRawDeck(this.getGunBase(path), path))))
-    //this.downloadFile(this.makeTextFile(JSON.stringify(this.makeBaseDeck(this.makeCrowdankiDeck(await this.getRawDeck(this.getGunBase(path), path))))))
-    console.log("END: Download")
+    //console.log("START: Download")
+    console.log("Deck:", await this.getRawDeck(this.getGunBase(path), path))
+    this.downloadFile(this.makeTextFile(JSON.stringify(this.makeBaseDeck(this.makeCrowdankiDeck(await this.getRawDeck(this.getGunBase(path), path))))))
+    //console.log("END: Download")
     return true;
   }
 
@@ -65,27 +65,27 @@ export class DownloadService {
     return {
       __type__: "Note",
       fields: [encodeURIComponent(JSON.stringify(card.path)), card.uuid],
-      guid: "",
+      guid: card.uuid,
       note_model_uuid: this.ankitubeNodeModelUuid,
       tags: ["ankitube"]
     }
   }
 
   getGunBase(path: Path[]): IGunChain<any> {
-    console.log("START: GetGunBase")
+    //console.log("START: GetGunBase")
     let tmp = this.gun.get("decks").get(path[0].uuid)
     if (path.length > 1) {
       for (let i = 1; i < path.length; i++) {
         tmp = tmp.get("decks").get(path[i].uuid)
       }
     }
-    console.log("END: GetGunBase", tmp)
+    //console.log("END: GetGunBase", tmp)
     return tmp
   }
 
 
   async getRawDeck(gun: IGunChain<any>, path: Path[]): Promise<RawDeck> {
-    console.log("START: getRawDeck");
+    //console.log("START: getRawDeck");
 
 
     const deck: RawDeck = {
@@ -102,7 +102,7 @@ export class DownloadService {
     const deckPromises = aggregatedPaths.map((p) => this.getRawDeck(this.getGunBase(p), p));
     deck.decks = await Promise.all(deckPromises);
 
-    console.log("END: getRawDeck", deck);
+    //console.log("END: getRawDeck", deck);
     return deck;
   }
 
@@ -112,7 +112,7 @@ export class DownloadService {
       let aggregatedData: DeckCard[] = []
       gun.get("cards").once((data, key) => {
         if (data == null) {
-          console.error("no cards", path)
+          //console.log("no cards", path)
           resolve(aggregatedData)
         } else {
           let uuids = Object.keys(data)
@@ -127,16 +127,16 @@ export class DownloadService {
   }
 
   async getDecks(gun: IGunChain<any>, path: Path[]): Promise<Path[][]> {
-    console.log("CALLED: getDecks")
+    //console.log("CALLED: getDecks")
     return new Promise<Path[][]>((resolve) => {
       const aggregatedData: Path[][] = [];
 
       gun.get("decks").once(async (data, key) => {
         if (data == null) {
-          console.error(path)
+          //console.log(path)
           resolve(aggregatedData)
         } else {
-          console.log("GET_DECKS_ONCE", Object.keys(data))
+          //console.log("GET_DECKS_ONCE", Object.keys(data))
           let uuids = Object.keys(data)
           uuids = uuids.filter(e => e != "_")
           for (let uuid of uuids) {
@@ -153,10 +153,10 @@ export class DownloadService {
     return new Promise<string>((resolve) => {
       gun.once((data, key) => {
         if (data) {
-          console.log("GET NAME:", data)
+          //console.log("GET NAME:", data)
           resolve(data.name)
         } else {
-          console.error(path)
+          //console.log(path)
           resolve("not found")
         }
       })
