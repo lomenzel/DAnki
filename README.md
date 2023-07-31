@@ -1,27 +1,53 @@
-# AnkiTubeAngular
+# DAnki: Collaborative Anki Card Creation Platform
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.2.
+DAnki is a collaborative website designed to simplify the creation of Anki Cards. Anki is a powerful spaced repetition flashcard system that helps language learners, students, and educators optimize their learning experience. DAnki leverages the real-time collaboration capabilities of GunDB servers and the distributed hosting capabilities of IPFS to provide a seamless and collaborative environment for users to create and share Anki Cards.
 
-## Development server
+## Key Features:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Real-time Collaboration: Collaborate with others in real-time to create and edit Anki Cards together.
 
-## Code scaffolding
+- CrowdAnki Export: Easily export your collaborative Anki decks using the CrowdAnki addon for Anki.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular and Angular Material: DAnki is built with Angular and Angular Material, providing a modern and user-friendly interface.
 
-## Build
+- IPFS Hosting: DAnki is hosted on IPFS and Syncs the Decks with GunDB to enable offline use with a local IPFS Node
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Who is DAnki for?
 
-## Running unit tests
+DAnki is designed for language learners, students, educators, and anyone seeking to optimize their Anki experience with Collaboration. Whether you study alone or in groups, DAnki empowers you to create effective Anki Cards collaboratively.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Get Started:
 
-## Running end-to-end tests
+1. Set up a local IPFS Server (e.g., using Brave) or use a public Gateway.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Access DAnki using the latest CID or the DNS link danki.menzel.lol.
 
-## Further help
+3. Create a new deck or collaborate on an existing one.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+4. Install the [CrowdAnki Addon](https://ankiweb.net/shared/info/1788670778) in Anki.
+
+5. In Anki, import the downloaded `deck.json` by clicking "CrowdAnki: Import from Disk" in the menu.
+
+### DIY (Development):
+
+1. Clone the Git project.
+
+2. Install the Angular CLI globally: `npm install -g @angular/cli`.
+
+3. Set up a GunDB server and update the defaults in `settings.service.ts`.
+
+4. Build the project: `ng build`.
+
+5. Set up an IPFS node.
+
+6. Upload `/dist/danki` to your IPFS node.
+
+7. Open `localhost:8080/ipfs/<CID>` to access your locally hosted DAnki instance.
+
+## Contribute and Support:
+
+We welcome contributions from developers, designers, and Anki enthusiasts to help improve DAnki further. Feel free to contribute to the project on GitHub or share any ideas and feedback.
+
+## License:
+
+DAnki is released under the GPLv3. Please refer to the LICENSE file for more details.
