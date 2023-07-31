@@ -110,15 +110,16 @@ export class DownloadService {
   async getCards(gun: IGunChain<any>, path: Path[]): Promise<DeckCard[]> {
     return new Promise<DeckCard[]>((resolve) => {
       let aggregatedData: DeckCard[] = []
-      gun.get("cards").once((data, key) => {
+      gun.get("cards").once(async (data, key) => {
         if (data == null) {
           //console.log("no cards", path)
           resolve(aggregatedData)
         } else {
           let uuids = Object.keys(data)
           uuids = uuids.filter(e => e != "_")
-          for(let uuid of uuids){
-            aggregatedData.push({path:path,uuid:uuid})
+          for (let uuid of uuids) {
+            if (await this.isCardDeleted(path, uuid)) continue;
+            aggregatedData.push({path: path, uuid: uuid})
           }
           resolve(aggregatedData)
         }
@@ -140,6 +141,7 @@ export class DownloadService {
           let uuids = Object.keys(data)
           uuids = uuids.filter(e => e != "_")
           for (let uuid of uuids) {
+            if (await this.isDeckDeleted([...path, {name: "", uuid: uuid}])) continue;
             aggregatedData.push([...path, {uuid: uuid, name: await this.getName([...path, {uuid: uuid, name: ""}])}])
           }
           resolve(aggregatedData)
@@ -168,7 +170,27 @@ export class DownloadService {
 
   makeBaseDeck(deck: CrowdAnkiDeckModel): CrowdAnkiBaseDeckModel {
     return {...this.exampleDeck, "children": [deck]}
+  }
 
+  async isDeckDeleted(path: Path[]): Promise<boolean> {
+    let gun = this.getGunBase(path)
+    return new Promise<boolean>((resolve) => {
+        gun.once((data, key) => {
+          resolve( !(data && !data.deleted));
+        })
+      }
+    )
+
+  }
+
+  async isCardDeleted(path: Path[], uuid: string): Promise<boolean> {
+    let gun = this.getGunBase(path).get("cards").get(uuid)
+    return new Promise<boolean>((resolve) => {
+        gun.once((data, key) => {
+          resolve( !(data && !data.deleted));
+        })
+      }
+    )
   }
 
   downloadFile(fileURL: string) {
@@ -333,7 +355,7 @@ export class DownloadService {
         "sortf": 0,
         "tmpls": [
           {
-            "afmt": "<iframe src='https://dweb.link/ipfs/QmS58U2jWHrr6gUbLLomT7b443Bsqob297jFiVs4jKYHVQ/#/card/view/{{path}}/{{uuid}}?back=true'>",
+            "afmt": "<iframe src='https://dweb.link/ipfs/QmbCY52uxYosZVnt9WRa8gbBUHxT29iptY3MHPJSqyMJZW/#/card/view/{{path}}/{{uuid}}?back=true'>",
             "bafmt": "",
             "bfont": "",
             "bqfmt": "",
@@ -341,7 +363,7 @@ export class DownloadService {
             "did": null,
             "name": "Karte 1",
             "ord": 0,
-            "qfmt": "<iframe src='https://dweb.link/ipfs/QmS58U2jWHrr6gUbLLomT7b443Bsqob297jFiVs4jKYHVQ/#/card/view/{{path}}/{{uuid}}'>"
+            "qfmt": "<iframe src='https://dweb.link/ipfs/QmbCY52uxYosZVnt9WRa8gbBUHxT29iptY3MHPJSqyMJZW/#/card/view/{{path}}/{{uuid}}'>"
           }
         ],
         "type": 0

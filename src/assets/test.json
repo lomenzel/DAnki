@@ -1,0 +1,211 @@
+{
+  "__type__": "Deck",
+  "children": [
+    {
+      "__type__": "Deck",
+      "children": [
+        {
+          "__type__": "Deck",
+          "children": [
+            {
+              "__type__": "Deck",
+              "children": [],
+              "crowdanki_uuid": "lko1lxz4Vz9Df4extNtF",
+              "deck_config_uuid": "58b6fa76-a586-11ed-a34c-9bbd37c88a3c",
+              "desc": "",
+              "dyn": 0,
+              "extendNew": 0,
+              "extendRev": 0,
+              "media_files": [],
+              "name": "TROLLOLOL",
+              "newLimit": null,
+              "newLimitToday": null,
+              "notes": [
+                {
+                  "__type__": "Note",
+                  "fields": [
+                    "%5B%7B%22name%22%3A%22Hallihallo%20ich%20bin%20ein%20Test%22%2C%22uuid%22%3A%22lknz9cw89j2PK7EM9wTv%22%7D%2C%7B%22uuid%22%3A%22lko1lu3hgHIWNAbbOeas%22%2C%22name%22%3A%22asef%22%7D%2C%7B%22uuid%22%3A%22lko1lxz4Vz9Df4extNtF%22%2C%22name%22%3A%22TROLLOLOL%22%7D%5D",
+                    "lko1m7wtXcx40Th8dLQS"
+                  ],
+                  "guid": "",
+                  "note_model_uuid": "ae7d8d10-2d28-11ee-a20a-072d319e12c7",
+                  "tags": [
+                    "ankitube"
+                  ]
+                }
+              ],
+              "reviewLimit": null,
+              "reviewLimitToday": null
+            }
+          ],
+          "crowdanki_uuid": "lko1lu3hgHIWNAbbOeas",
+          "deck_config_uuid": "58b6fa76-a586-11ed-a34c-9bbd37c88a3c",
+          "desc": "",
+          "dyn": 0,
+          "extendNew": 0,
+          "extendRev": 0,
+          "media_files": [],
+          "name": "asef",
+          "newLimit": null,
+          "newLimitToday": null,
+          "notes": [],
+          "reviewLimit": null,
+          "reviewLimitToday": null
+        }
+      ],
+      "crowdanki_uuid": "lknz9cw89j2PK7EM9wTv",
+      "deck_config_uuid": "58b6fa76-a586-11ed-a34c-9bbd37c88a3c",
+      "desc": "",
+      "dyn": 0,
+      "extendNew": 0,
+      "extendRev": 0,
+      "media_files": [],
+      "name": "Hallihallo ich bin ein Test",
+      "newLimit": null,
+      "newLimitToday": null,
+      "notes": [
+        {
+          "__type__": "Note",
+          "fields": [
+            "%5B%7B%22name%22%3A%22Hallihallo%20ich%20bin%20ein%20Test%22%2C%22uuid%22%3A%22lknz9cw89j2PK7EM9wTv%22%7D%5D",
+            "lknz9qe3xX4SWpbHMvgh"
+          ],
+          "guid": "",
+          "note_model_uuid": "ae7d8d10-2d28-11ee-a20a-072d319e12c7",
+          "tags": [
+            "ankitube"
+          ]
+        }
+      ],
+      "reviewLimit": null,
+      "reviewLimitToday": null
+    }
+  ],
+  "crowdanki_uuid": "ae7d6790-2d28-11ee-a20a-072d319e12c7",
+  "deck_config_uuid": "58b6fa76-a586-11ed-a34c-9bbd37c88a3c",
+  "deck_configurations": [
+    {
+      "__type__": "DeckConfig",
+      "autoplay": true,
+      "buryInterdayLearning": true,
+      "crowdanki_uuid": "58b6fa76-a586-11ed-a34c-9bbd37c88a3c",
+      "dyn": false,
+      "interdayLearningMix": 0,
+      "lapse": {
+        "delays": [
+          10
+        ],
+        "leechAction": 1,
+        "leechFails": 8,
+        "minInt": 1,
+        "mult": 0
+      },
+      "maxTaken": 60,
+      "name": "Default",
+      "new": {
+        "bury": true,
+        "delays": [
+          1,
+          10
+        ],
+        "initialFactor": 2500,
+        "ints": [
+          1,
+          4,
+          0
+        ],
+        "order": 1,
+        "perDay": 10,
+        "separate": true
+      },
+      "newGatherPriority": 1,
+      "newMix": 1,
+      "newPerDayMinimum": 0,
+      "newSortOrder": 0,
+      "replayq": true,
+      "rev": {
+        "bury": true,
+        "ease4": 1.3,
+        "fuzz": 0.05,
+        "hardFactor": 1.2,
+        "ivlFct": 1,
+        "maxIvl": 36500,
+        "minSpace": 1,
+        "perDay": 9999
+      },
+      "reviewOrder": 0,
+      "timer": 0
+    }
+  ],
+  "desc": "",
+  "dyn": 0,
+  "extendNew": 0,
+  "extendRev": 0,
+  "media_files": [],
+  "name": "AnkiTube",
+  "newLimit": null,
+  "newLimitToday": null,
+  "note_models": [
+    {
+      "__type__": "NoteModel",
+      "crowdanki_uuid": "ae7d8d10-2d28-11ee-a20a-072d319e12c7",
+      "css": "html,body,iframe{\nheight:100vh;\nwidth:100vw;\nborder:none;\npadding:0;\nmargin:0\n}",
+      "flds": [
+        {
+          "collapsed": false,
+          "description": "",
+          "excludeFromSearch": false,
+          "font": "Liberation Sans",
+          "name": "path",
+          "ord": 0,
+          "plainText": false,
+          "rtl": false,
+          "size": 20,
+          "sticky": false
+        },
+        {
+          "collapsed": false,
+          "description": "",
+          "excludeFromSearch": false,
+          "font": "Arial",
+          "name": "uuid",
+          "ord": 1,
+          "plainText": false,
+          "rtl": false,
+          "size": 20,
+          "sticky": false
+        }
+      ],
+      "latexPost": "\\end{document}",
+      "latexPre": "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}\n",
+      "latexsvg": false,
+      "name": "AnkiTube",
+      "originalStockKind": 1,
+      "req": [
+        [
+          0,
+          "none",
+          []
+        ]
+      ],
+      "sortf": 0,
+      "tmpls": [
+        {
+          "afmt": "<iframe src='https://dweb.link/ipfs/QmS58U2jWHrr6gUbLLomT7b443Bsqob297jFiVs4jKYHVQ/#/card/view/{{path}}/{{uuid}}?back=true'>",
+          "bafmt": "",
+          "bfont": "",
+          "bqfmt": "",
+          "bsize": 0,
+          "did": null,
+          "name": "Karte 1",
+          "ord": 0,
+          "qfmt": "<iframe src='https://dweb.link/ipfs/QmS58U2jWHrr6gUbLLomT7b443Bsqob297jFiVs4jKYHVQ/#/card/view/{{path}}/{{uuid}}'>"
+        }
+      ],
+      "type": 0
+    }
+  ],
+  "notes": [],
+  "reviewLimit": null,
+  "reviewLimitToday": null
+}

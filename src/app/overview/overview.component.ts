@@ -45,8 +45,8 @@ export class OverviewComponent {
 
   remove(key: string) {
     this.gDecks.get(key).put({deleted: true})
-    //this.decks = this.decks.filter(e => e.uuid !== key)
-    this.changeDirectorRef.detectChanges()
+    this.decks = this.decks.filter(e => e.uuid !== key)
+    //this.changeDirectorRef.detectChanges()
   }
 
   add() {

@@ -9,7 +9,7 @@ export class TypesService {
 
   constructor(
     public gunService: GunService,
-    public settingsService:SettingsService
+    public settingsService: SettingsService
   ) {
     this.gun.map().on((data, key) => this.event(data, key))
   }
@@ -29,11 +29,11 @@ export class TypesService {
           return a.json()
         }).then(d => {
         //console.log("!!!!! Hier daten", d, data)
-
-
-        this.types.push({"key": key, "value": {...d, "cid": data.cid}})
+        if (this.types.filter(e => e.value.cid == data.cid).length == 0)
+          this.types.push({"key": key, "value": {...d, "cid": data.cid}})
       }).catch(e => {
-        this.types.push({"key": key, "value": {...data, "error": true}})
+        if (this.types.filter(e => e.value.cid == data.cid).length == 0)
+          this.types.push({"key": key, "value": {...data, "error": true}})
       })
 
 
@@ -48,8 +48,8 @@ export class TypesService {
       return this.types.filter(e => !e.value.error)
   }
 
-  getFields(cid:string){
-    return this.types.filter(e=>e.value.cid == cid)[0]?.value.fields
+  getFields(cid: string) {
+    return this.types.filter(e => e.value.cid == cid)[0]?.value.fields
   }
 
   add(cid: string) {

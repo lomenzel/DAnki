@@ -134,7 +134,7 @@ export class DeckComponent {
 
   remove(key: string) {
     this.gDecks.get(key).put({deleted: true})
-    //this.decks = this.decks.filter(e => e.uuid !== key)
+    this.decks = this.decks.filter(e => e.uuid !== key)
 
   }
 
