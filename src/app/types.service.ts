@@ -14,7 +14,7 @@ export class TypesService {
     this.gun.map().on((data, key) => this.event(data, key))
   }
 
-  gun = this.gunService.get().get("ankitube-types")
+  gun = this.gunService.get().get("danki-types")
 
   types: any[] = []
 

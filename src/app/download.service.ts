@@ -66,8 +66,8 @@ export class DownloadService {
       __type__: "Note",
       fields: [encodeURIComponent(JSON.stringify(card.path)), card.uuid],
       guid: card.uuid,
-      note_model_uuid: this.ankitubeNodeModelUuid,
-      tags: ["ankitube"]
+      note_model_uuid: this.dankiNodeModelUuid,
+      tags: ["DAnki"]
     }
   }
 
@@ -205,7 +205,7 @@ export class DownloadService {
     return window.URL.createObjectURL(data);
   }
 
-  ankitubeNodeModelUuid = "ae7d8d10-2d28-11ee-a20a-072d319e12c7"
+  dankiNodeModelUuid = "ae7d8d10-2d28-11ee-a20a-072d319e12c7"
 
   exampleDeck: CrowdAnkiBaseDeckModel = {
     "__type__": "Deck",
@@ -300,7 +300,7 @@ export class DownloadService {
     "extendNew": 0,
     "extendRev": 0,
     "media_files": [],
-    "name": "AnkiTube",
+    "name": "DAnki",
     "newLimit": null,
     "newLimitToday": null,
     "note_models": [
@@ -343,7 +343,7 @@ export class DownloadService {
         "latexPost": "\\end{document}",
         "latexPre": "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}\n",
         "latexsvg": false,
-        "name": "AnkiTube",
+        "name": "DAnki",
         "originalStockKind": 1,
         "req": [
           [
@@ -355,7 +355,7 @@ export class DownloadService {
         "sortf": 0,
         "tmpls": [
           {
-            "afmt": "<iframe src='https://dweb.link/ipfs/QmbCY52uxYosZVnt9WRa8gbBUHxT29iptY3MHPJSqyMJZW/#/card/view/{{path}}/{{uuid}}?back=true'>",
+            "afmt": "<iframe src='https://dweb.link/ipns/danki.menzel.lol/#/card/view/{{path}}/{{uuid}}?back=true'>",
             "bafmt": "",
             "bfont": "",
             "bqfmt": "",
@@ -363,7 +363,7 @@ export class DownloadService {
             "did": null,
             "name": "Karte 1",
             "ord": 0,
-            "qfmt": "<iframe src='https://dweb.link/ipfs/QmbCY52uxYosZVnt9WRa8gbBUHxT29iptY3MHPJSqyMJZW/#/card/view/{{path}}/{{uuid}}'>"
+            "qfmt": "<iframe src='https://dweb.link/ipns/danki.menzel.lol/#/card/view/{{path}}/{{uuid}}'>"
           }
         ],
         "type": 0

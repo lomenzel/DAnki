@@ -12,7 +12,7 @@ export class GunService {
   gun = GUN(this.settingsService.getGunServer())
 
   get(){
-    return this.gun.get("AnkiTube-Root-Node")
+    return this.gun.get("DAnki-Root-Node-beta")
   }
 
 }

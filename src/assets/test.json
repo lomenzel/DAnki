@@ -30,7 +30,7 @@
                   "guid": "",
                   "note_model_uuid": "ae7d8d10-2d28-11ee-a20a-072d319e12c7",
                   "tags": [
-                    "ankitube"
+                    "danki"
                   ]
                 }
               ],
@@ -73,7 +73,7 @@
           "guid": "",
           "note_model_uuid": "ae7d8d10-2d28-11ee-a20a-072d319e12c7",
           "tags": [
-            "ankitube"
+            "danki"
           ]
         }
       ],
@@ -142,7 +142,7 @@
   "extendNew": 0,
   "extendRev": 0,
   "media_files": [],
-  "name": "AnkiTube",
+  "name": "DAnki",
   "newLimit": null,
   "newLimitToday": null,
   "note_models": [
@@ -179,7 +179,7 @@
       "latexPost": "\\end{document}",
       "latexPre": "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}\n",
       "latexsvg": false,
-      "name": "AnkiTube",
+      "name": "DAnki",
       "originalStockKind": 1,
       "req": [
         [

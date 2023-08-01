@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AnkiTubeAngular": {
+    "DAnki": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "AnkiTubeAngular:build:production"
+              "browserTarget": "DAnki:build:production"
             },
             "development": {
-              "browserTarget": "AnkiTubeAngular:build:development"
+              "browserTarget": "DAnki:build:development"
             }
           },
           "defaultConfiguration": "development",
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AnkiTubeAngular:build"
+            "browserTarget": "DAnki:build"
           }
         },
         "test": {
