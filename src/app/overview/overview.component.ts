@@ -58,7 +58,7 @@ export class OverviewComponent {
 
   newName = ''
 
-  decks: { name: string, uuid: string }[] = []
+  decks: { name: string, uuid: string ,downloading:boolean}[] = []
   filter = {
     path: "Blablabla"
   }
@@ -69,8 +69,11 @@ export class OverviewComponent {
     this.dialog.open(DownloadComponent, dialogConfig)
   }
 
-  download(deck: { name: string, uuid: string }): void {
-    this.downloadService.download([deck])
+  download(deck: { name: string, uuid: string,downloading:boolean }): void {
+    deck.downloading = true
+    this.downloadService.download([deck]).then(e =>{
+      deck.downloading = false
+    })
   }
 }
 

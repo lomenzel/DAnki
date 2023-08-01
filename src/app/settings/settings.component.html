@@ -1,18 +1,40 @@
-<p>Änderungen werden erst beim nächsten Neustart aktiv</p>
-<button mat-raised-button (click)="reload()">Neu laden</button>
+<!-- Use Angular Material components and Material Design styles -->
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>GUN</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input [(ngModel)]="newGun" matInput placeholder="Enter gun name">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="addGun()">
+        <mat-icon>add</mat-icon>
+        Add Gun
+      </button>
+      <div class="gun-list" *ngIf="gunServers.length > 0">
+        <div *ngFor="let g of gunServers" class="gun-item">
+          <span>{{ g }}</span>
+          <button mat-icon-button color="warn" (click)="removeGun(g)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-<h1>GUN</h1>
-<mat-form-field class="example-full-width">
-  <mat-label>Name</mat-label>
-  <input [(ngModel)]="newGun" matInput placeholder="" value="">
-</mat-form-field>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>IPFS</mat-card-title><mat-card-subtitle>{{ ipfsGateway }}</mat-card-subtitle>
+    </mat-card-header>
 
-<button (click)="addGun()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-  <mat-icon >add</mat-icon>
-</button>
-<p *ngFor="let g of gunServers">{{g}} <button (click)="removeGun(g)" mat-icon-button><mat-icon>delete</mat-icon></button></p>
-
-<h1>IPFS</h1>
-<p>{{ipfsGateway}}</p>
-<input [(ngModel)]="newIpfs">
-<button mat-raised-button (click)="setIpfs()">Ändern</button>
+          <mat-card-content>
+      <mat-form-field class="example-full-width">
+        <mat-label>IPFS Gateway</mat-label>
+        <input [(ngModel)]="newIpfs" matInput placeholder="Enter new IPFS Gateway">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="setIpfs()">Change IPFS Gateway</button>
+    </mat-card-content>
+  </mat-card>
+</div>

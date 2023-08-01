@@ -34,7 +34,7 @@ export class DownloadService {
 
   async download(path: { name: string, uuid: string }[]): Promise<boolean> {
     //console.log("START: Download")
-    console.log("Deck:", await this.getRawDeck(this.getGunBase(path), path))
+    //console.log("Deck:", await this.getRawDeck(this.getGunBase(path), path))
     this.downloadFile(this.makeTextFile(JSON.stringify(this.makeBaseDeck(this.makeCrowdankiDeck(await this.getRawDeck(this.getGunBase(path), path))))))
     //console.log("END: Download")
     return true;

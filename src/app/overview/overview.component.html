@@ -1,8 +1,8 @@
 <div class="outer">
-<mat-card-header>
-  <mat-card-title>Decks</mat-card-title>
+  <mat-card-header>
+    <mat-card-title>Decks</mat-card-title>
 
-</mat-card-header>
+  </mat-card-header>
   <mat-card-content>
 
     <mat-form-field class="example-full-width">
@@ -11,7 +11,7 @@
     </mat-form-field>
 
     <button (click)="add()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon >add</mat-icon>
+      <mat-icon>add</mat-icon>
     </button>
   </mat-card-content>
 
@@ -28,9 +28,19 @@
         <mat-divider></mat-divider>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-icon-button (click)="download({name:deck.name,uuid:deck.uuid})" class="example-icon" aria-label="Example icon-button with share icon">
+
+        <button *ngIf="!deck.downloading; else downloadingSpinner" (click)="download(deck)" mat-icon-button
+                class="example-icon" aria-label="Example icon-button with share icon">
           <mat-icon color="accent">download</mat-icon>
         </button>
+
+        <ng-template #downloadingSpinner>
+          <button mat-icon-button>
+            <mat-spinner diameter="24" color="accent"></mat-spinner>
+          </button>
+        </ng-template>
+
+
         <button (click)="openDialog([{name:deck.name,uuid:deck.uuid}])" mat-icon-button class="example-icon"
                 aria-label="Example icon-button with share icon">
           <mat-icon color="accent">edit</mat-icon>

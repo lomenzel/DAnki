@@ -23,7 +23,7 @@ export class TypesService {
     //console.log("gun", this.gun)
     this.types = this.types.filter(e => e.key != key)
     if (data)
-      fetch(this.settingsService.getIpfsGateway() + data.cid + "/manifest.json")
+      fetch(this.settingsService.getIpfsGateway() + "/ipfs/" + data.cid + "/manifest.json")
         .then(a => {
           //console.log("try json parse", data.cid, a);
           return a.json()

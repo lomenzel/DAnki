@@ -232,9 +232,14 @@ export class DeckComponent {
   }
 
   download(path: { name: string; uuid: string; deleted: boolean | undefined }[], deck: any) {
+    deck.downloading = true
     let newPath = [...path]
+
     newPath.push(deck)
-    this.downloadService.download(newPath)
+    this.downloadService.download(newPath).then(e => {
+      deck.downloading = false
+    })
     console.log(newPath)
   }
+
 }

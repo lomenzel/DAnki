@@ -27,6 +27,8 @@ import { CardEditComponent } from './card/card-edit/card-edit.component';
 import { CardPreviewComponent } from './card/card-preview/card-preview.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { DownloadComponent } from './download/download.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -60,7 +62,9 @@ import { DownloadComponent } from './download/download.component';
     MatDialogModule,
     MatChipsModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

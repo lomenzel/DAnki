@@ -64,14 +64,18 @@ span {
 
 
   }
-  button.deleted{
+
+  button.deleted {
     background: red;
   }
 
 }
+.container{
+  margin:0.5cm;
+}
 
 .title {
-  margin-top: 0px
+  margin-top: 0px;
 }
 
 .mat-form-field-wrapper {

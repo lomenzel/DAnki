@@ -10,7 +10,7 @@ export class SettingsService {
 
   getGunServer(): string[] {
     if (!localStorage.getItem("gunServers")) {
-      return ["https://menzel.lol:8765/gun",'https://gun-manhattan.herokuapp.com/gun']
+      return ["https://menzel.lol:8765/gun", 'https://gun-manhattan.herokuapp.com/gun']
     } else { // @ts-ignore
       return JSON.parse(localStorage.getItem("gunServers"))
     }
@@ -18,7 +18,9 @@ export class SettingsService {
   }
 
   addGunServer(server: string) {
-    localStorage.setItem("gunServers", JSON.stringify(this.getGunServer().push(server)))
+    let gunServer = this.getGunServer()
+    gunServer.push(server)
+    localStorage.setItem("gunServers", JSON.stringify(gunServer))
 
   }
 
@@ -28,14 +30,19 @@ export class SettingsService {
 
   getIpfsGateway(): string {
     if (!localStorage.getItem("ipfsGateway"))
-      return "https://dweb.link/ipfs/"
+      return "https://dweb.link"
     else { // @ts-ignore
       return localStorage.getItem("ipfsGateway")
     }
   }
 
-  setIpfsGateway(url:string) {
-  localStorage.setItem("ipfsGateway",url)
+  setIpfsGateway(url: string) {
+    console.log(url)
+    url = url.replace(/\/ipfs\//,"")
+    url = url.replace(/\/$/,"")
+
+    console.log(url)
+    localStorage.setItem("ipfsGateway", url)
   }
 
 }

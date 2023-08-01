@@ -9,9 +9,7 @@
   </button>
 </span>
 
-
-<mat-dialog-content>
-
+<div class="container">
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>Decks</mat-expansion-panel-header>
@@ -46,9 +44,19 @@
             <mat-divider></mat-divider>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-icon-button (click)="download(path,deck)" class="example-icon" aria-label="Example icon-button with share icon">
+
+
+            <button *ngIf="!deck.downloading; else downloadingSpinner" (click)="download(path,deck)" mat-icon-button
+                    class="example-icon" aria-label="Example icon-button with share icon">
               <mat-icon color="accent">download</mat-icon>
             </button>
+
+            <ng-template #downloadingSpinner>
+              <button mat-icon-button>
+                <mat-spinner diameter="24" color="accent"></mat-spinner>
+              </button>
+            </ng-template>
+
             <button mat-icon-button (click)="openDeck(deck.uuid,false)" class="example-icon"
                     aria-label="Example icon-button with share icon">
               <mat-icon color="accent">edit</mat-icon>
@@ -65,12 +73,13 @@
 
       </div>
     </mat-expansion-panel>
+
     <mat-expansion-panel>
 
       <mat-expansion-panel-header>
-        <mat-panel-title>Material</mat-panel-title>
+        <mat-panel-title>Quellen</mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-card-header>Neues Material</mat-card-header>
+      <mat-card-header>Neue Quelle</mat-card-header>
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <mat-label>Name</mat-label>
@@ -116,6 +125,7 @@
 
     </mat-expansion-panel>
     <mat-expansion-panel>
+
       <mat-expansion-panel-header>
         <mat-panel-title>Karten</mat-panel-title>
       </mat-expansion-panel-header>
@@ -181,5 +191,4 @@
   </mat-accordion>
 
 
-</mat-dialog-content>
-
+</div>

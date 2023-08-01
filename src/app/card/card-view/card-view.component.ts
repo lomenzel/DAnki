@@ -85,7 +85,7 @@ export class CardViewComponent {
   }
 
   updateFrameURL(): void {
-    let url = this.settingsServie.getIpfsGateway() + this.card.type + '?fields=' + this.card.fields + "&back=" + this.back
+    let url = this.settingsServie.getIpfsGateway() +"/ipfs/" + this.card.type + '?fields=' + this.card.fields + "&back=" + this.back
     this.frameURL = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
