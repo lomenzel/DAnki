@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {SettingsService} from "../settings.service";
+import {PrivateService} from "../private.service";
 
 @Component({
   selector: 'app-settings',
@@ -7,12 +8,13 @@ import {SettingsService} from "../settings.service";
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent {
-  constructor(public settingsService: SettingsService) {
+  constructor(public settingsService: SettingsService,public privateService:PrivateService) {
   }
 
   gunServers = this.settingsService.getGunServer()
   ipfsGateway = this.settingsService.getIpfsGateway()
   newGun = "";
+  privateDecks = this.privateService.get()
 
   addGun() {
     this.settingsService.addGunServer(this.newGun)
@@ -33,5 +35,10 @@ export class SettingsComponent {
   }
   reload(){
     location.reload()
+  }
+
+  removePrivate(id:string){
+    this.privateService.remove(id)
+    this.privateDecks = this.privateService.get()
   }
 }

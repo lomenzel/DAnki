@@ -6,13 +6,16 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {SettingsComponent} from "./settings/settings.component";
 import {CardViewComponent} from "./card/card-view/card-view.component";
 import {CardPreviewComponent} from "./card/card-preview/card-preview.component";
+import {PrivateComponent} from "./private/private.component";
 
 const routes: Routes = [
   {path: "", component: OverviewComponent},
   {path: "deck/:path", component: DeckComponent},
   {path: "settings", component: SettingsComponent},
   {path: "card/view/:path/:card", component: CardViewComponent},
-  {path: "card/preview/:path/:card",component:CardPreviewComponent}
+  {path: "card/preview/:path/:card",component:CardPreviewComponent},
+  {path: "shared/add/:id", component:PrivateComponent}
+
 ];
 
 @NgModule({

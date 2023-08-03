@@ -29,6 +29,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { DownloadComponent } from './download/download.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { PrivateComponent } from './private/private.component';
 
 
 @NgModule({
@@ -43,6 +45,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     CardEditComponent,
     CardPreviewComponent,
     DownloadComponent,
+    PrivateComponent,
 
   ],
   imports: [
@@ -64,7 +67,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatExpansionModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -38,11 +38,24 @@ export class SettingsService {
 
   setIpfsGateway(url: string) {
     console.log(url)
-    url = url.replace(/\/ipfs\//,"")
-    url = url.replace(/\/$/,"")
+    url = url.replace(/\/ipfs\//, "")
+    url = url.replace(/\/$/, "")
 
     console.log(url)
     localStorage.setItem("ipfsGateway", url)
+  }
+
+  setRestore(to: boolean) {
+    localStorage.setItem("restore", JSON.stringify(to))
+  }
+
+  getRestore(): boolean {
+    try {
+      // @ts-ignore
+      return JSON.parse(localStorage.getItem("restore"))
+    } catch (e) {
+      return false
+    }
   }
 
 }

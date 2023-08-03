@@ -6,6 +6,7 @@ import {GunService} from "../gun.service";
 import {Router} from "@angular/router";
 import {DownloadComponent} from "../download/download.component";
 import {DownloadService} from "../download.service";
+import {SettingsService} from "../settings.service";
 
 @Component({
   selector: 'app-overview',
@@ -19,6 +20,7 @@ export class OverviewComponent {
 
   constructor(public router: Router,
               private changeDirectorRef: ChangeDetectorRef,
+              private settingsService:SettingsService,
               public dialog: MatDialog,
               public downloadService:DownloadService,
               public gunService: GunService) {
@@ -28,7 +30,7 @@ export class OverviewComponent {
 
 
       this.decks = this.decks.filter(e => e.uuid !== key)
-      if (data != null && !data.deleted) {
+      if (data != null) {
         data.uuid = key
         this.decks.push(data)
       }
@@ -48,6 +50,19 @@ export class OverviewComponent {
     this.decks = this.decks.filter(e => e.uuid !== key)
     //this.changeDirectorRef.detectChanges()
   }
+  restoreDeck(key:string){
+    this.gDecks.get(key).put({deleted:false}).once((data, key) => {
+
+
+      this.decks = this.decks.filter(e => e.uuid !== key)
+      if (data != null) {
+        data.uuid = key
+        this.decks.push(data)
+      }
+      //this.changeDirectorRef.detectChanges()
+    })
+
+  }
 
   add() {
     if (this.newName !== "") {
@@ -58,7 +73,7 @@ export class OverviewComponent {
 
   newName = ''
 
-  decks: { name: string, uuid: string ,downloading:boolean}[] = []
+  decks: { name: string, uuid: string ,downloading:boolean, deleted:boolean}[] = []
   filter = {
     path: "Blablabla"
   }
@@ -75,5 +90,8 @@ export class OverviewComponent {
       deck.downloading = false
     })
   }
+  restore:boolean = this.settingsService.getRestore();
+
+  privateDecks:{uuid:string,name:string,downloading:boolean}[] = []
 }
 

@@ -37,4 +37,21 @@
       <button mat-raised-button color="primary" (click)="setIpfs()">Change IPFS Gateway</button>
     </mat-card-content>
   </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Priavte Decks</mat-card-title>  </mat-card-header>
+      <mat-card-content>
+
+        <div class="gun-list" *ngIf="privateDecks.length > 0">
+          <div *ngFor="let d of privateDecks" class="gun-item">
+            <span>{{ d }}</span>
+            <button mat-icon-button color="warn" (click)="removePrivate(d)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+      </mat-card-content>
+
+  </mat-card>
 </div>
