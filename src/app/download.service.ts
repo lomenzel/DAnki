@@ -13,6 +13,10 @@ interface RawDeck {
   uuid: string
   name: string;
 }
+interface Location {
+  path:Path[],
+  private:boolean
+}
 
 interface DeckCard {
   path: Path[],
@@ -32,10 +36,10 @@ export class DownloadService {
   constructor(private gunService: GunService) {
   }
 
-  async download(path: { name: string, uuid: string }[]): Promise<boolean> {
+  async download(location: Location): Promise<boolean> {
     //console.log("START: Download")
     //console.log("Deck:", await this.getRawDeck(this.getGunBase(path), path))
-    this.downloadFile(this.makeTextFile(JSON.stringify(this.makeBaseDeck(this.makeCrowdankiDeck(await this.getRawDeck(this.getGunBase(path), path))))))
+    this.downloadFile(this.makeTextFile(JSON.stringify(this.makeBaseDeck(this.makeCrowdankiDeck(await this.getRawDeck(this.gunService.getGunBase(location), location))))))
     //console.log("END: Download")
     return true;
   }
@@ -71,35 +75,25 @@ export class DownloadService {
     }
   }
 
-  getGunBase(path: Path[]): IGunChain<any> {
-    //console.log("START: GetGunBase")
-    let tmp = this.gun.get("decks").get(path[0].uuid)
-    if (path.length > 1) {
-      for (let i = 1; i < path.length; i++) {
-        tmp = tmp.get("decks").get(path[i].uuid)
-      }
-    }
-    //console.log("END: GetGunBase", tmp)
-    return tmp
-  }
 
 
-  async getRawDeck(gun: IGunChain<any>, path: Path[]): Promise<RawDeck> {
+
+  async getRawDeck(gun: IGunChain<any>, location: { path:Path[],private:boolean }): Promise<RawDeck> {
     //console.log("START: getRawDeck");
 
 
     const deck: RawDeck = {
-      cards: await this.getCards(this.getGunBase(path), path),
+      cards: await this.getCards(this.gunService.getGunBase(location), location),
       decks: [],
-      name: await this.getName(path),  // @ts-ignore
+      name: await this.getName(location),  // @ts-ignore
       uuid: path.at(-1).uuid,
     };
 
     // Call getDecks and wait for the result using await
-    const aggregatedPaths = await this.getDecks(gun, path);
+    const aggregatedPaths = await this.getDecks(gun, location);
 
     // Use Promise.all to handle all the recursive calls to getRawDeck asynchronously
-    const deckPromises = aggregatedPaths.map((p) => this.getRawDeck(this.getGunBase(p), p));
+    const deckPromises = aggregatedPaths.map((p) => this.getRawDeck(this.gunService.getGunBase(p), p));
     deck.decks = await Promise.all(deckPromises);
 
     //console.log("END: getRawDeck", deck);
@@ -107,7 +101,7 @@ export class DownloadService {
   }
 
 
-  async getCards(gun: IGunChain<any>, path: Path[]): Promise<DeckCard[]> {
+  async getCards(gun: IGunChain<any>,location:Location): Promise<DeckCard[]> {
     return new Promise<DeckCard[]>((resolve) => {
       let aggregatedData: DeckCard[] = []
       gun.get("cards").once(async (data, key) => {
@@ -118,8 +112,8 @@ export class DownloadService {
           let uuids = Object.keys(data)
           uuids = uuids.filter(e => e != "_")
           for (let uuid of uuids) {
-            if (await this.isCardDeleted(path, uuid)) continue;
-            aggregatedData.push({path: path, uuid: uuid})
+            if (await this.isCardDeleted(location, uuid)) continue;
+            aggregatedData.push({location: location, uuid: uuid})
           }
           resolve(aggregatedData)
         }
@@ -127,10 +121,10 @@ export class DownloadService {
     })
   }
 
-  async getDecks(gun: IGunChain<any>, path: Path[]): Promise<Path[][]> {
+  async getDecks(gun: IGunChain<any>, location: Location): Promise<Location[]> {
     //console.log("CALLED: getDecks")
-    return new Promise<Path[][]>((resolve) => {
-      const aggregatedData: Path[][] = [];
+    return new Promise<Location[]>((resolve) => {
+      const aggregatedData: Location[] = [];
 
       gun.get("decks").once(async (data, key) => {
         if (data == null) {
@@ -151,7 +145,7 @@ export class DownloadService {
   }
 
   async getName(path: Path[]): Promise<string> {
-    let gun = this.getGunBase(path)
+    let gun = this.gunService.getGunBase(path)
     return new Promise<string>((resolve) => {
       gun.once((data, key) => {
         if (data) {
@@ -173,7 +167,7 @@ export class DownloadService {
   }
 
   async isDeckDeleted(path: Path[]): Promise<boolean> {
-    let gun = this.getGunBase(path)
+    let gun = this.gunService.getGunBase(path)
     return new Promise<boolean>((resolve) => {
         gun.once((data, key) => {
           resolve( !(data && !data.deleted));
@@ -184,7 +178,7 @@ export class DownloadService {
   }
 
   async isCardDeleted(path: Path[], uuid: string): Promise<boolean> {
-    let gun = this.getGunBase(path).get("cards").get(uuid)
+    let gun = this.gunService.getGunBase(path).get("cards").get(uuid)
     return new Promise<boolean>((resolve) => {
         gun.once((data, key) => {
           resolve( !(data && !data.deleted));
